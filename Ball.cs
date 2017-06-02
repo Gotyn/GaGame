@@ -8,28 +8,19 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-public class Ball
+public class Ball : GameObject
 {
-	private string name;
-	private Image image;
-
-	private Vec2 position = null; // making clear no default value, needs constructor action.
-	private Vec2 velocity = null;
-	
+	//private Image image;
 	private bool pausing = true;
-	
 	public readonly Vec2 Speed = new Vec2( 10.0f, 10.0f );
 	
-	public Ball( string pName, string pImageFile )
+	public Ball( string pName, string pImageFile, Vec2 pPosition, Vec2 pVelocity) : base (pName, pPosition, pVelocity, pImageFile)
 	{
-		name = pName;
-		image = Image.FromFile( pImageFile );
-		position = new Vec2( 312, 232 ); // center of form
-		velocity = new Vec2( 0.0f, 0.0f );
+		//image = Image.FromFile( pImageFile );
 		Reset(); // sets pos and vel
 	}
 	
-	public void Update( Graphics graphics )
+	override public void Update( Graphics graphics )
 	{
 		// input
 		if( Input.Key.Enter( Keys.P ) ) {
@@ -88,26 +79,26 @@ public class Ball
 		Time.Timeout( "Reset", 1.0f, Restart );	// restart after 1 sec.
 	}
 	 
-	public Vec2 Center {
-		get {
-			return position + 0.5f * Size;
-		}
-	}	
-	public Vec2 Position {
-		get { 
-			return position;
-		}
-	}
-	public Vec2 Size {
-		get { 
-			return new Vec2( image.Width, image.Height ); 
-		}
-	}
-	public Vec2 Velocity {
-		get {
-			return velocity;
-		}
-	}
+	//public Vec2 Center {
+	//	get {
+	//		return position + 0.5f * Size;
+	//	}
+	//}	
+	//public Vec2 Position {
+	//	get { 
+	//		return position;
+	//	}
+	//}
+	//public Vec2 Size {
+	//	get { 
+	//		return new Vec2( image.Width, image.Height ); 
+	//	}
+	//}
+	//public Vec2 Velocity {
+	//	get {
+	//		return velocity;
+	//	}
+	//}
 	
 	public void Restart(  Object sender,  Time.TimeoutEvent timeout ) 
 	{

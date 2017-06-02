@@ -17,11 +17,12 @@ public class CurvedPaddle : Paddle
 	
 	override public void Update( Graphics graphics )
 	{
-		// input
-		
-		velocity.Y = 0; // no move 
-		if ( Input.Key.Pressed( Keys.Up ) ) velocity.Y = -Speed;
-		if ( Input.Key.Pressed( Keys.Down ) ) velocity.Y = Speed;
+        // input
+        _inputComponent.Update(this);
+
+  //      velocity.Y = 0; // no move 
+		//if ( Input.Key.Pressed( Keys.Up ) ) velocity.Y = -Speed;
+		//if ( Input.Key.Pressed( Keys.Down ) ) velocity.Y = Speed;
 		
 		// move
 		position.Add( velocity );
