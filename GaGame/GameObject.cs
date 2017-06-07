@@ -12,6 +12,7 @@ public abstract class GameObject {
     public Vec2 position = new Vec2();
     public Vec2 velocity = new Vec2();
     public Image image;
+    private Graphics _graphics;
 
 
     public GameObject(string pName, Vec2 pPosition, Vec2 pVelocity, String pImageFile) {
@@ -26,7 +27,6 @@ public abstract class GameObject {
         image = Image.FromFile(pImageFile);
         position = new Vec2(positionX, positionY);
         velocity = new Vec2(velocityX, velocityY);
-
     }
 
     virtual public void Update(Graphics graphics) {
@@ -53,4 +53,6 @@ public abstract class GameObject {
             return velocity;
         }
     }
+
+    public Graphics Graphics { get => _graphics; set => _graphics = value; }
 }
