@@ -55,15 +55,18 @@
     <Compile Include="CurvedPaddle.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Paddle.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
-    <Compile Include="Window.cs" />
+    <Compile Include="Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GaEngine" />
+    <Folder Include="GaEngine\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

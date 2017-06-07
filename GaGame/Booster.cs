@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-public class Booster
+public class Booster : GameObject
 {
 	private string name;
 	private Image image;
@@ -25,8 +25,10 @@ public class Booster
 		
 		ball = pBall;		
 	}
-	
-	public void Update( Graphics graphics )
+
+    override public void Update() { }
+
+    public void Update( Graphics graphics )
 	{
 		// input
 

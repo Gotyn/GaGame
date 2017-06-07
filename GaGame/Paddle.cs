@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-public class Paddle
+public class Paddle : GameObject
 {
 	protected string name;
 	protected Image image;
@@ -31,8 +31,10 @@ public class Paddle
 		ball = pBall;
 		score = 0;		
 	}
-	
-	virtual public void Update( Graphics graphics )
+
+    override public void Update() { }
+
+    virtual public void Update( Graphics graphics )
 	{
 		// input
 		

@@ -7,7 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 
-public class Text
+public class Text : GameObject
 {
 	private string name;
 	private Image image;
@@ -25,8 +25,10 @@ public class Text
 		text = "0";
 		paddle = pPaddle;
 	}
-	
-	virtual public void Update( Graphics graphics )
+
+    override public void Update() { }
+
+    virtual public void Update( Graphics graphics )
 	{
 		Debug.Assert(graphics != null );
 		Debug.Assert(paddle != null );

@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-public class Ball
+public class Ball : GameObject
 {
 	private string name;
 	private Image image;
@@ -28,7 +28,9 @@ public class Ball
 		velocity = new Vec2( 0.0f, 0.0f );
 		Reset(); // sets pos and vel
 	}
-	
+
+    override public void Update() { }
+
 	public void Update( Graphics graphics )
 	{
 		// input
