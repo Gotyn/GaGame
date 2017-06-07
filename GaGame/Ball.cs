@@ -29,35 +29,35 @@ public class Ball : GameObject
 		Reset(); // sets pos and vel
 	}
 
-    override public void Update() { }
+    override public void Update() {
+        // input
+        if (Input.Key.Enter(Keys.P)) {
+            pausing = !pausing; // toggle
+            Console.WriteLine("Pausing " + pausing);
+        }
 
-	public void Update( Graphics graphics )
+        // move
+        if (!pausing) {
+            position.Add(velocity);
+        }
+
+        // collisions & resolve
+
+        // Y bounds reflect
+        if (position.Y < 0) {
+            position.Y = 0;
+            velocity.Y = -velocity.Y;
+        }
+        if (position.Y > 480 - 16) { // note: non maintainable literals here, who did this
+            position.Y = 480 - 16;
+            velocity.Y = -velocity.Y;
+        }
+
+        // see game and paddles
+    }
+
+    public void Update( Graphics graphics )
 	{
-		// input
-		if( Input.Key.Enter( Keys.P ) ) {
-			pausing = ! pausing; // toggle
-			Console.WriteLine( "Pausing "+pausing );
-		}
-		
-		// move
-		if( ! pausing ) {
-			position.Add( velocity );
-		}
-		
-		// collisions & resolve
-
-		// Y bounds reflect
-		if( position.Y < 0 ) { 
-			position.Y = 0;
-			velocity.Y = -velocity.Y;
-		}
-		if( position.Y > 480-16 ) { // note: non maintainable literals here, who did this
-			position.Y = 480-16;
-			velocity.Y = -velocity.Y;
-		}
-		
-		// see game and paddles
-		
 		// graphics
 		graphics.DrawImage( image, position.X, position.Y );
 	}	

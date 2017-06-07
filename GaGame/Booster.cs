@@ -26,23 +26,23 @@ public class Booster : GameObject
 		ball = pBall;		
 	}
 
-    override public void Update() { }
+    override public void Update() {
+        // input
+
+        // move
+
+        // collisions & resolve
+        //Console.WriteLine( active );
+        if (active && Intersects(ball.Position, ball.Size)) {
+            active = false;
+            ball.Boost();
+            Time.Timeout("Deboosting", 0.5f, DeBoost);
+        }
+    }
 
     public void Update( Graphics graphics )
 	{
-		// input
-
-		// move
-		
-		// collisions & resolve
-		//Console.WriteLine( active );
-		if( active && Intersects( ball.Position, ball.Size ) ) {
-			active = false;
-			ball.Boost();
-			Time.Timeout( "Deboosting", 0.5f, DeBoost );
-		}
-
-		// Render
+        // Render
 		graphics.DrawImage( image, position.X, position.Y );
 	}	
 	
