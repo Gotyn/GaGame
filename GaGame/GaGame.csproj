@@ -52,25 +52,18 @@
     <Compile Include="AutoPaddle.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Booster.cs" />
-    <Compile Include="Components\Component.cs" />
     <Compile Include="CurvedPaddle.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Paddle.cs" />
-    <Compile Include="Components\InputComponent.cs" />
-    <Compile Include="Components\PhysicsComponent.cs" />
-    <Compile Include="Components\RenderComponent.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
-    <Compile Include="Window.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Window.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GaEngine\" />
+    <Folder Include="GaEngine" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

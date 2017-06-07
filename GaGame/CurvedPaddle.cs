@@ -17,12 +17,11 @@ public class CurvedPaddle : Paddle
 	
 	override public void Update( Graphics graphics )
 	{
-        // input
-        _inputComponent.Update(this);
-
-  //      velocity.Y = 0; // no move 
-		//if ( Input.Key.Pressed( Keys.Up ) ) velocity.Y = -Speed;
-		//if ( Input.Key.Pressed( Keys.Down ) ) velocity.Y = Speed;
+		// input
+		
+		velocity.Y = 0; // no move 
+		if ( Input.Key.Pressed( Keys.Up ) ) velocity.Y = -Speed;
+		if ( Input.Key.Pressed( Keys.Down ) ) velocity.Y = Speed;
 		
 		// move
 		position.Add( velocity );
@@ -41,8 +40,8 @@ public class CurvedPaddle : Paddle
 		// collisions
 		if( position.Y < 0 ) position.Y = 0;
 		if( position.Y > 416 ) position.Y = 416;
-
-        // render
-        _renderComponent.Update(this, graphics);
-    }	
+		
+		// render
+		graphics.DrawImage( image, position.X, position.Y );
+	}	
 }

@@ -8,17 +8,25 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-public class Booster : GameObject
+public class Booster
 {
+	private string name;
+	private Image image;
+
+	private Vec2 position = null; // making clear no default value, needs constructor action.
 	private bool active = true;
 	private Ball ball;
 	
-	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base (pName, pX, pY, 0, 0, pImageFile)
+	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall )
 	{
+		name = pName;
+		image = Image.FromFile( pImageFile );
+		position = new Vec2( pX, pY );
+		
 		ball = pBall;		
 	}
 	
-	override public void Update( Graphics graphics )
+	public void Update( Graphics graphics )
 	{
 		// input
 
@@ -60,5 +68,20 @@ public class Booster : GameObject
 		position.Y = 240-8;
 	}
 	
+	public Vec2 Center {
+		get {
+			return position + 0.5f * Size;
+		}
+	}	
+	public Vec2 Position {
+		get { 
+			return position;
+		}
+	}
+	public Vec2 Size {
+		get { 
+			return new Vec2( image.Width, image.Height ); 
+		}
+	}
 }
 
