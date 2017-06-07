@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 public class PhysicsComponent {
     private GameObject _gameObject;
-    private GameObject _ball;
 
     public void Update(GameObject gameObject, Ball ball) {
         _gameObject = gameObject;

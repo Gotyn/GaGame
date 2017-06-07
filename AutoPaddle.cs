@@ -23,28 +23,28 @@ public class AutoPaddle : Paddle
         velocity.Y = 0; // no move 
 		if ( ball.Position.Y+8 > position.Y+32 + 8 ) velocity.Y = +Speed;
 		if ( ball.Position.Y+8 < position.Y+32 - 8 ) velocity.Y = -Speed;
-		
-		//// move
-		//position.Add( velocity );
-		
-		//// collisions & resolve
-		//if( Intersects( ball.Position, ball.Size ) ) {
-		//	if( ball.Velocity.X > 0 ) {
-		//		ball.Position.X = position.X - ball.Size.X;
-		//	} else if( ball.Velocity.X < 0 ) {
-		//		ball.Position.X = position.X + Size.X;
-		//	}
-		//	ball.Velocity.X = -ball.Velocity.X;
-		//	ball.Velocity.Y = ( ball.Center.Y - Center.Y ) / 32 + ( (float)(Game.Random.NextDouble())-0.5f ) * 10.0f; // curve randomly
-		
-		//}
-		
-		//// collisions
-		//if( position.Y < 0 ) position.Y = 0;
-		//if( position.Y > 416 ) position.Y = 416;
-		
-		// render
-		graphics.DrawImage( image, position.X, position.Y );
-	}	
+
+        // move
+        position.Add(velocity);
+
+        // collisions & resolve
+        if (Intersects(ball.Position, ball.Size)) {
+            if (ball.Velocity.X > 0) {
+                ball.Position.X = position.X - ball.Size.X;
+            } else if (ball.Velocity.X < 0) {
+                ball.Position.X = position.X + Size.X;
+            }
+            ball.Velocity.X = -ball.Velocity.X;
+            ball.Velocity.Y = (ball.Center.Y - Center.Y) / 32 + ((float)(Game.Random.NextDouble()) - 0.5f) * 10.0f; // curve randomly
+
+        }
+
+        // collisions
+        if (position.Y < 0) position.Y = 0;
+        if (position.Y > 416) position.Y = 416;
+
+        // render
+        _renderComponent.Update(this, graphics);
+    }	
 }
 

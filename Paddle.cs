@@ -39,8 +39,7 @@ public class Paddle : GameObject
         _physicsComponent.Update(this, ball);
         				
 		// render
-		graphics.DrawImage( image, position.X, position.Y );
-        //_renderComponent.Update(this, graphics);
+        _renderComponent.Update(this, graphics);
     }
 
     public void IncScore() 

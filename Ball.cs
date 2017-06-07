@@ -16,7 +16,6 @@ public class Ball : GameObject
 	
 	public Ball( string pName, string pImageFile, Vec2 pPosition, Vec2 pVelocity) : base (pName, pPosition, pVelocity, pImageFile)
 	{
-		//image = Image.FromFile( pImageFile );
 		Reset(); // sets pos and vel
 	}
 	
@@ -79,27 +78,6 @@ public class Ball : GameObject
 		Time.Timeout( "Reset", 1.0f, Restart );	// restart after 1 sec.
 	}
 	 
-	//public Vec2 Center {
-	//	get {
-	//		return position + 0.5f * Size;
-	//	}
-	//}	
-	//public Vec2 Position {
-	//	get { 
-	//		return position;
-	//	}
-	//}
-	//public Vec2 Size {
-	//	get { 
-	//		return new Vec2( image.Width, image.Height ); 
-	//	}
-	//}
-	//public Vec2 Velocity {
-	//	get {
-	//		return velocity;
-	//	}
-	//}
-	
 	public void Restart(  Object sender,  Time.TimeoutEvent timeout ) 
 	{
 		pausing = false;

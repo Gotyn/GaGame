@@ -8,6 +8,6 @@ using System.Drawing;
 
 public class RenderComponent {
     public void Update(GameObject gameObject, Graphics graphics) {
-
+        graphics.DrawImage(gameObject.image, gameObject.position.X, gameObject.position.Y);
     }
 }
