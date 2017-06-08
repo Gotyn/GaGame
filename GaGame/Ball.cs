@@ -11,10 +11,11 @@ using System.Windows.Forms;
 public class Ball : GameObject
 {
 	private string name;
-	private Image image;
+    
+    //private Image image;
+    //private Vec2 position = null; // making clear no default value, needs constructor action.
 
-	private Vec2 position = null; // making clear no default value, needs constructor action.
-	private Vec2 velocity = null;
+    private Vec2 velocity = null;
 	
 	private bool pausing = true;
 	

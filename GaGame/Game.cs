@@ -81,14 +81,25 @@ public class Game
 	{
 		Time.Update();
 		FrameCounter.Update();
-		
-		// steps to do
-			// input
-			// apply velocity so move		
-			// check collisions and apply reponse and rules		
-			// render
 
-		ball.Update( pGraphics );
+        // steps to do
+        // input
+        // apply velocity so move		
+        // check collisions and apply reponse and rules		
+        // render
+
+        #region "Normal Update()"
+        ball.Update();
+        leftPaddle.Update();
+        rightPaddle.Update();
+        booster1.Update();
+        booster2.Update();
+        leftScore.Update();
+        rightScore.Update();
+        #endregion
+
+        #region "Draw Update()"
+        ball.Update( pGraphics );
 		leftPaddle.Update( pGraphics );
 		rightPaddle.Update( pGraphics );
 		booster1.Update( pGraphics );
@@ -96,8 +107,9 @@ public class Game
 		
 		leftScore.Update( pGraphics );
 		rightScore.Update( pGraphics );
-		
-		if( ball.Position.X < 0 ) {
+        #endregion
+
+        if( ball.Position.X < 0 ) {
 			rightPaddle.IncScore();
 			ball.Reset();
 		}		
@@ -110,6 +122,10 @@ public class Game
 		
 		//Console.WriteLine("Updating");
 	}
+
+    public void Draw( Graphics graphics ) {
+        //graphics.DrawImage(image, position.X, position.Y);
+    }
 	
 	public void Close() {
 		window.Close();

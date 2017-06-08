@@ -10,8 +10,8 @@ using System.Drawing;
 public class Text : GameObject
 {
 	private string name;
-	private Image image;
-	private Vec2 position = null;
+	//private Image image;
+	//private Vec2 position = null;
 	private string text;
 	
 	private Paddle paddle;

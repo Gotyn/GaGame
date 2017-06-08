@@ -11,9 +11,9 @@ using System.Windows.Forms;
 public class Paddle : GameObject
 {
 	protected string name;
-	protected Image image;
+	//protected Image image;
 
-	protected Vec2 position = null; // making clear no default value, needs constructor action.
+	//protected Vec2 position = null; // making clear no default value, needs constructor action.
 	protected Vec2 velocity = null;
 	
 	protected Ball ball = null;
