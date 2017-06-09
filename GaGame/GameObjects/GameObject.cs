@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Diagnostics;
 using System.Drawing;
 
 public class GameObject : Object {
@@ -23,8 +23,7 @@ public class GameObject : Object {
         _name = pName;
     }
 
-    virtual public void Update() {
-    }
+    virtual public void Update() {}
 
     public GameObject Parent {
         get {
@@ -41,6 +40,13 @@ public class GameObject : Object {
             child.UpdateThroughChildren();
         }
         Update();
+    }
+
+    public void DrawThroughChildren(Graphics graphics) {
+        foreach (GameObject child in childrenList) {
+            child.DrawThroughChildren(graphics);
+        }
+        Draw(graphics);
     }
 
     public void ListChildren() {
@@ -63,6 +69,10 @@ public class GameObject : Object {
         get {
             return new Vec2(image.Width, image.Height);
         }
+    }
+
+    public void Draw(Graphics graphics) {
+        if (position != null) graphics.DrawImage(image, position.X, position.Y);
     }
 
 }

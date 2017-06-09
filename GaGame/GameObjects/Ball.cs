@@ -16,7 +16,7 @@ public class Ball : GameObject
 	
 	public readonly Vec2 Speed = new Vec2( 10.0f, 10.0f );
 	
-	public Ball( string pName, string pImageFile ) : base (pName)
+	public Ball( string pName, string pImageFile, GameObject pParent = null ) : base (pName, pParent)
 	{
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( 312, 232 ); // center of form

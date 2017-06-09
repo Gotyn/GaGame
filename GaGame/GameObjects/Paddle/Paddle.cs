@@ -18,7 +18,7 @@ public class Paddle : GameObject
 	public const float Speed = 5.0f;
 	
 	
-	public Paddle( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base(pName) {
+	public Paddle( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null) : base(pName, pParent) {
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		velocity = new Vec2( 0, 0 );

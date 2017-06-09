@@ -13,7 +13,7 @@ public class Booster : GameObject
 	private bool active = true;
 	private Ball ball;
 	
-	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base (pName)
+	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null ) : base (pName, pParent)
 	{
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );

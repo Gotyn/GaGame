@@ -11,55 +11,29 @@ class World : GameObject {
     private Text rightScore;
 
     public Ball ball;
-    private Paddle leftPaddle;
-    private Paddle rightPaddle;
+    public Paddle leftPaddle;
+    public Paddle rightPaddle;
     private Booster booster1;
     private Booster booster2;
-
-    //private List<GameObject> gameObjectList = new List<GameObject>();
 
     public World() {
         _name = "World";
 
-        ball = new Ball("Ball", "ball.png"); // orbitting the window centre
-        ball.Parent = this;
+        ball = new Ball("Ball", "ball.png", this); // orbitting the window centre
+        
+        //leftPaddle = new AutoPaddle("Left", 10, 208, "paddle.png", ball, this);
+        //rightPaddle = new AutoPaddle("Right", 622, 208, "paddle.png", ball, this);
 
-        leftPaddle = new AutoPaddle("Left", 10, 208, "paddle.png", ball);
-        leftPaddle.Parent = this;
+        leftPaddle = new Paddle("Left", 10, 208, "paddle.png", ball, this);
+        rightPaddle = new Paddle("Right", 622, 208, "paddle.png", ball, this);
 
-        rightPaddle = new AutoPaddle("Right", 622, 208, "paddle.png", ball);
-        rightPaddle.Parent = this;
-
-        leftScore = new Text("LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle);
-        leftScore.Parent = this;
-
-
-        rightScore = new Text("RightScore", 320 + 20, 10, "digits.png", rightPaddle);
-        rightScore.Parent = this;
-
-        booster1 = new Booster("Booster", 304, 96, "booster.png", ball);
-        booster1.Parent = this;
-
-        booster2 = new Booster("Booster", 304, 384, "booster.png", ball);
-        rightScore.Parent = this;
+        leftScore = new Text("LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle, this);
+        rightScore = new Text("RightScore", 320 + 20, 10, "digits.png", rightPaddle, this);
+        booster1 = new Booster("Booster", 304, 96, "booster.png", ball, this);
+        booster2 = new Booster("Booster", 304, 384, "booster.png", ball, this);
     }
 
-
-    public void Update(Graphics pGraphics) {
-
-    
-        #region "Draw Update()"
-        ball.Update(pGraphics);
-        leftPaddle.Update(pGraphics);
-        rightPaddle.Update(pGraphics);
-        booster1.Update(pGraphics);
-        booster2.Update(pGraphics);
-
-        leftScore.Update(pGraphics);
-        rightScore.Update(pGraphics);
-
-        #endregion
-
+    override public void Update() {
         if (ball.Position.X < 0) {
             rightPaddle.IncScore();
             ball.Reset();
@@ -68,9 +42,6 @@ class World : GameObject {
             leftPaddle.IncScore();
             ball.Reset();
         }
-
-        
-
     }
 
 }

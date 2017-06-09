@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 public class AutoPaddle : Paddle
 {
-	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base( pName, pX, pY, pImageFile, pBall ) { }
+	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null) : base( pName, pX, pY, pImageFile, pBall, pParent ) { }
 	
-	override public void Update( Graphics graphics ) {
+	override public void Update() {
 		// input
 		
 		velocity.Y = 0; // no move 
@@ -38,7 +38,7 @@ public class AutoPaddle : Paddle
 		if( position.Y > 416 ) position.Y = 416;
 		
 		// render
-		graphics.DrawImage( image, position.X, position.Y );
+		//graphics.DrawImage( image, position.X, position.Y );
 	}	
 }
 
