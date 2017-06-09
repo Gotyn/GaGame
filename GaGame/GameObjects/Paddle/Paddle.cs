@@ -10,10 +10,6 @@ using System.Windows.Forms;
 
 public class Paddle : GameObject
 {
-	protected string name;
-	//protected Image image;
-
-	//protected Vec2 position = null; // making clear no default value, needs constructor action.
 	protected Vec2 velocity = null;
 	
 	protected Ball ball = null;
@@ -22,9 +18,7 @@ public class Paddle : GameObject
 	public const float Speed = 5.0f;
 	
 	
-	public Paddle( string pName, float pX, float pY, string pImageFile, Ball pBall )
-	{
-		name = pName;
+	public Paddle( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base(pName) {
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		velocity = new Vec2( 0, 0 );

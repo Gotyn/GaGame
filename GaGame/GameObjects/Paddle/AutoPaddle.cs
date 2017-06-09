@@ -9,10 +9,7 @@ using System.Windows.Forms;
 
 public class AutoPaddle : Paddle
 {
-	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall )
-		: base( pName, pX, pY, pImageFile, pBall ) 
-	{
-	}
+	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base( pName, pX, pY, pImageFile, pBall ) { }
 	
 	override public void Update( Graphics graphics )
 	{

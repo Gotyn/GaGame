@@ -10,10 +10,7 @@ using System.Windows.Forms;
 public class CurvedPaddle : Paddle
 {	
 	
-	public CurvedPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall )
-		: base( pName, pX, pY, pImageFile, pBall ) 
-	{
-	}
+	public CurvedPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base( pName, pX, pY, pImageFile, pBall ) {	}
 
     public override void Update() {
         // input

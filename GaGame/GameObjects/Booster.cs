@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 public class Booster : GameObject
 {
-	private string name;
-	//private Image image;
-
-	//private Vec2 position = null; // making clear no default value, needs constructor action.
 	private bool active = true;
 	private Ball ball;
 	
-	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall )
+	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base (pName)
 	{
-		name = pName;
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		

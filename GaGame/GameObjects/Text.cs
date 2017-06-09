@@ -9,17 +9,12 @@ using System.Drawing;
 
 public class Text : GameObject
 {
-	private string name;
-	//private Image image;
-	//private Vec2 position = null;
 	private string text;
 	
 	private Paddle paddle;
 	
 	
-	public Text( string pName, float pX, float pY, string pImageFile, Paddle pPaddle )
-	{
-		name = pName;
+	public Text( string pName, float pX, float pY, string pImageFile, Paddle pPaddle ) : base(pName) {
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		text = "0";
