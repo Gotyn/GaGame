@@ -11,8 +11,7 @@ public class AutoPaddle : Paddle
 {
 	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base( pName, pX, pY, pImageFile, pBall ) { }
 	
-	override public void Update( Graphics graphics )
-	{
+	override public void Update( Graphics graphics ) {
 		// input
 		
 		velocity.Y = 0; // no move 

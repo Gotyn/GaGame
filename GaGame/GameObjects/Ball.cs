@@ -52,8 +52,7 @@ public class Ball : GameObject
         // see game and paddles
     }
 
-    public void Update( Graphics graphics )
-	{
+    public void Update( Graphics graphics ) { 
 		// graphics
 		graphics.DrawImage( image, position.X, position.Y );
 	}	
@@ -75,8 +74,7 @@ public class Ball : GameObject
 	}
 	
 	
-	public void Reset() 
-	{
+	public void Reset() {
 		position.X = 320-8;
 		position.Y = 240-8;
 		//velocity.X = 0.5f;
@@ -86,22 +84,8 @@ public class Ball : GameObject
 		Time.Timeout( "Reset", 1.0f, Restart );	// restart after 1 sec.
 	}
 	 
-	public Vec2 Center {
-		get {
-			return position + 0.5f * Size;
-		}
-	}	
-	public Vec2 Position {
-		get { 
-			return position;
-		}
-	}
-	public Vec2 Size {
-		get { 
-			return new Vec2( image.Width, image.Height ); 
-		}
-	}
-	public Vec2 Velocity {
+
+    public Vec2 Velocity {
 		get {
 			return velocity;
 		}

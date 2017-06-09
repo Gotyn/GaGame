@@ -68,22 +68,6 @@ public class Paddle : GameObject
 		    this.position.Y < otherPosition.Y+otherSize.Y && this.position.Y + this.Size.Y > otherPosition.Y;
 	}
 	
-	public Vec2 Center {
-		get {
-			return position + 0.5f * Size;
-		}
-	}	
-	public Vec2 Position {
-		get { 
-			return position;
-		}
-	}
-	public Vec2 Size {
-		get { 
-			return new Vec2( image.Width, image.Height ); 
-		}
-	}	
-
 	public uint Score {
 		get { 
 			return score; 

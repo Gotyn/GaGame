@@ -65,20 +65,5 @@ public class Booster : GameObject
 		position.Y = 240-8;
 	}
 	
-	public Vec2 Center {
-		get {
-			return position + 0.5f * Size;
-		}
-	}	
-	public Vec2 Position {
-		get { 
-			return position;
-		}
-	}
-	public Vec2 Size {
-		get { 
-			return new Vec2( image.Width, image.Height ); 
-		}
-	}
 }
 

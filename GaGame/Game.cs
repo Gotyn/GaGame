@@ -10,35 +10,29 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
-public class Game
-{
-	[STAThread] // needed to use wpf Keyboard.isKeyPressed when single threaded !
-	static
-	public void Main() {
-		Console.WriteLine( "Starting Game, close with Escape");
-		Game game;
-			game = new Game();
-				game.Build();
-				game.Run();
-			game.Close();
-		Console.WriteLine( "Closed window");
-
-	}
-
-
+public class Game {
+    [STAThread] // needed to use wpf Keyboard.isKeyPressed when single threaded !
+    static
+    public void Main() {
+        Console.WriteLine("Starting Game, close with Escape");
+        Game game;
+        game = new Game();
+        game.Build();
+        game.Run();
+        game.Close();
+        Console.WriteLine("Closed window");
+    } 
 
 	static private Random random = new Random( 0 ); // seed for repeatability.
 	
 	private Window window;
     private World world;
 	
-	public Game()
-	{
+	public Game() { 
 		window = new Window( this );
 	}	
 
-	private void Build() 
-	{
+	private void Build() { 
         world = new World();
     }
 
@@ -55,12 +49,10 @@ public class Game
 			}
 			
 			window.Refresh(); // use refresh for a frame based update, async
-
 		}
 	}
 
-	public void Update( Graphics pGraphics )
-	{
+	public void Update( Graphics pGraphics ) {
 		Time.Update();
 		FrameCounter.Update();
 
@@ -71,6 +63,7 @@ public class Game
         // render
 
         world.Update( pGraphics );
+        world.UpdateThroughChildren(); //loops through all child objects from World, then calls Update on exit.
         		
 		Thread.Sleep( 16 ); // roughly 60 fps
 		

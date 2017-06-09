@@ -51,11 +51,5 @@ public class Text : GameObject
 			text = value;
 		}
 	}
-	
-	public Vec2 Position {
-		get { 
-			return position;
-		}
-	}	
 }
 
