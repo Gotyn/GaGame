@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Component.cs" />
+    <Compile Include="Components\InputComponent.cs" />
+    <Compile Include="Components\PhysicsComponent.cs" />
+    <Compile Include="Components\RenderComponent.cs" />
     <Compile Include="GameObjects\Paddle\AutoPaddle.cs" />
     <Compile Include="GameObjects\Ball.cs" />
     <Compile Include="GameObjects\Booster.cs" />
