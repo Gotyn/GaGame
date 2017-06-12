@@ -49,6 +49,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Component.cs" />
     <Compile Include="GameObjects\Paddle\AutoPaddle.cs" />
     <Compile Include="GameObjects\Ball.cs" />
     <Compile Include="GameObjects\Booster.cs" />

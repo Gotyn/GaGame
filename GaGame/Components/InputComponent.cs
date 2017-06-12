@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Component {
+class InputComponent : Component {
 
-    virtual public void Update() { }
+    override public void Update() { }
 
 }
