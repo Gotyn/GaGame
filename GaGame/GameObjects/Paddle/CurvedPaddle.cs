@@ -7,22 +7,17 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-public class AutoPaddle : Paddle
-{
-	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall )
-		: base( pName, pX, pY, pImageFile, pBall ) 
-	{
-	}
+public class CurvedPaddle : Paddle
+{	
 	
-	override public void Update( Graphics graphics )
-	{
-        // input
-        //_inputComponent.Update(this);
+	public CurvedPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null ) : base( pName, pX, pY, pImageFile, pBall, pParent ) {	}
 
+    public override void Update() {
+        // input
 
         velocity.Y = 0; // no move 
-		if ( ball.Position.Y+8 > position.Y+32 + 8 ) velocity.Y = +Speed;
-		if ( ball.Position.Y+8 < position.Y+32 - 8 ) velocity.Y = -Speed;
+        if (Input.Key.Pressed(Keys.Up)) velocity.Y = -Speed;
+        if (Input.Key.Pressed(Keys.Down)) velocity.Y = Speed;
 
         // move
         position.Add(velocity);
@@ -35,16 +30,17 @@ public class AutoPaddle : Paddle
                 ball.Position.X = position.X + Size.X;
             }
             ball.Velocity.X = -ball.Velocity.X;
-            ball.Velocity.Y = (ball.Center.Y - Center.Y) / 32 + ((float)(Game.Random.NextDouble()) - 0.5f) * 10.0f; // curve randomly
-
+            ball.Velocity.Y = (ball.Center.Y - Center.Y) / 64 + ((float)(Game.Random.NextDouble()) - 0.5f) / 1.0f;
         }
 
         // collisions
         if (position.Y < 0) position.Y = 0;
         if (position.Y > 416) position.Y = 416;
+    }
 
-        // render
-        _renderComponent.Update(this, graphics);
-    }	
+    override public void Update( Graphics graphics )
+	{
+		// render
+		//graphics.DrawImage( image, position.X, position.Y );
+	}	
 }
-

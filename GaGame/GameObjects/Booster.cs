@@ -13,26 +13,31 @@ public class Booster : GameObject
 	private bool active = true;
 	private Ball ball;
 	
-	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall ) : base (pName, pX, pY, 0, 0, pImageFile)
+	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null ) : base (pName, pParent)
 	{
+		image = Image.FromFile( pImageFile );
+		position = new Vec2( pX, pY );
+		
 		ball = pBall;		
 	}
-	
-	override public void Update( Graphics graphics )
+
+    override public void Update() {
+        // input
+
+        // move
+
+        // collisions & resolve
+        //Console.WriteLine( active );
+        if (active && Intersects(ball.Position, ball.Size)) {
+            active = false;
+            ball.Boost();
+            Time.Timeout("Deboosting", 0.5f, DeBoost);
+        }
+    }
+
+    public void Update( Graphics graphics )
 	{
-		// input
-
-		// move
-		
-		// collisions & resolve
-		//Console.WriteLine( active );
-		if( active && Intersects( ball.Position, ball.Size ) ) {
-			active = false;
-			ball.Boost();
-			Time.Timeout( "Deboosting", 0.5f, DeBoost );
-		}
-
-		// Render
+        // Render
 		graphics.DrawImage( image, position.X, position.Y );
 	}	
 	

@@ -49,25 +49,26 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoPaddle.cs" />
-    <Compile Include="Ball.cs" />
-    <Compile Include="Booster.cs" />
     <Compile Include="Components\Component.cs" />
-    <Compile Include="CurvedPaddle.cs" />
-    <Compile Include="FrameCounter.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="Paddle.cs" />
     <Compile Include="Components\InputComponent.cs" />
     <Compile Include="Components\PhysicsComponent.cs" />
     <Compile Include="Components\RenderComponent.cs" />
-    <Compile Include="Text.cs" />
+    <Compile Include="GameObjects\Paddle\AutoPaddle.cs" />
+    <Compile Include="GameObjects\Ball.cs" />
+    <Compile Include="GameObjects\Booster.cs" />
+    <Compile Include="GameObjects\Paddle\CurvedPaddle.cs" />
+    <Compile Include="FrameCounter.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="GameObjects\Paddle\Paddle.cs" />
+    <Compile Include="GameObjects\Text.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GaEngine\" />
