@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class RenderComponent : Component {
+public class RenderComponent : Component {
 
     override public void Update() { }
 

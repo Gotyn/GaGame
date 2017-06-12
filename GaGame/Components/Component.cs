@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Component {
+public class Component {
+    private GameObject _owner;
 
     virtual public void Update() { }
 
+    public GameObject Owner { get => _owner; set => _owner = value; }
 }

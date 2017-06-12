@@ -14,6 +14,8 @@ public class GameObject : Object {
     public Vec2 position = null;
 
     public List<GameObject> childrenList = new List<GameObject>();
+    public List<Component> componentList = new List<Component>();
+
 
     public GameObject(GameObject pParent = null) {
         if (pParent != null) Parent = pParent;
@@ -73,6 +75,16 @@ public class GameObject : Object {
 
     public void Draw(Graphics graphics) {
         if (position != null) graphics.DrawImage(image, position.X, position.Y);
+    }
+
+    public void AddComponent(Component component) {
+        componentList.Add(component);
+    }
+
+    public void UpdateComponents() {
+        foreach (Component component in componentList) {
+            component.Update();
+        }
     }
 
 }
