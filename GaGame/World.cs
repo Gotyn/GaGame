@@ -27,6 +27,9 @@ class World : GameObject {
         //leftPaddle = new Paddle("Left", 10, 208, "paddle.png", ball, this);
         //rightPaddle = new Paddle("Right", 622, 208, "paddle.png", ball, this);
 
+        //leftPaddle = new CurvedPaddle("Left", 10, 208, "paddle.png", ball, this);
+        //rightPaddle = new CurvedPaddle("Right", 622, 208, "paddle.png", ball, this);
+
         leftScore = new Text("LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle, this);
         rightScore = new Text("RightScore", 320 + 20, 10, "digits.png", rightPaddle, this);
         booster1 = new Booster("Booster", 304, 96, "booster.png", ball, this);

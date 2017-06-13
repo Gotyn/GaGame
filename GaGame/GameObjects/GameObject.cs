@@ -97,9 +97,10 @@ public class GameObject : Object {
         component.Owner = null;
     }
 
-    public void UpdateComponents() {
-        foreach (Component component in componentList) {
-            component.Update();
+    public void RemoveComponentOfType(Type type) {
+        for (int i = componentList.Count-1; i>=0; i--) {
+            if (componentList[i].GetType() == type)
+                RemoveComponent(componentList[i]);
         }
     }
 
@@ -107,8 +108,21 @@ public class GameObject : Object {
         get { return childList; }
     }
 
-    public List<Component> GetComponent {
-        get { return componentList; }
+    public T GetComponent<T>() where T:Component {
+        foreach (Component component in componentList) {
+            if (component.GetType() == typeof(T))
+                return (T) component;
+        }
+        return null;
+    }
+
+    public List<Component> GetComponents(Type type) {
+        List<Component> returnList = new List<Component>();
+        foreach (Component component in componentList) {
+            if (component.GetType() == type)
+                returnList.Add(component);
+        }
+        return returnList;
     }
 
 }

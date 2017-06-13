@@ -19,7 +19,6 @@ static public class Time
 	
 	static SortedSet<TimeoutEvent> timeouts = new SortedSet<TimeoutEvent>();
 	
-	
 	static public void Update() {
 		float lastTime = now;
 		now = (float)stopwatch.ElapsedTicks / Stopwatch.Frequency; // convert to float

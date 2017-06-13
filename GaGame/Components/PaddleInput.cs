@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class InputComponent : Component {
+public class PaddleInput : Component {
 
-    public InputComponent() { }
+    public PaddleInput() { }
 
     override public void Update() { }
 

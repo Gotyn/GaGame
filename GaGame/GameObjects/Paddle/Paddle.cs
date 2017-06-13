@@ -28,13 +28,15 @@ public class Paddle : GameObject
 
         _rigidBody = new RigidBody();
 
-        AddComponent(new InputComponent());
+        AddComponent(new PaddleInput());
         AddComponent(new PhysicsComponent());
         AddComponent(new RenderComponent());
         AddComponent(_rigidBody);
     }
 
     override public void Update() {
+        base.Update();
+
         // input
 
         _rigidBody.Velocity.Y = 0; // no move 
@@ -42,7 +44,7 @@ public class Paddle : GameObject
         if (Input.Key.Pressed(Keys.Down)) _rigidBody.Velocity.Y = Speed;
 
         // move
-        position.Add(_rigidBody.Velocity);
+        //position.Add(_rigidBody.Velocity); //rigidbody took over
 
         // collisions & resolve
         if (Intersects(ball.Position, ball.Size)) {

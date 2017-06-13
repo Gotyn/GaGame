@@ -44,7 +44,7 @@ public class Ball : GameObject
 
         // move
         if (!pausing) {
-            //position.Add(_rigidBody.Velocity);
+            //position.Add(_rigidBody.Velocity); //--rigidbody took over
         }
 
         // collisions & resolve
