@@ -72,6 +72,8 @@ public class Vec2
 		this.y -= other.y;
 	}		
 	
+
+
 	// operator overloading, be carefull about semantics
 	static public Vec2 operator +( Vec2 one, Vec2 other) 
 	{

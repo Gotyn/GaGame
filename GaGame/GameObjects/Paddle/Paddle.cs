@@ -10,40 +10,48 @@ using System.Windows.Forms;
 
 public class Paddle : GameObject
 {
-	protected Vec2 velocity = null;
+	//protected Vec2 velocity = null;
 	
 	protected Ball ball = null;
 	protected uint score;
 	
 	public const float Speed = 5.0f;
-	
+
+    public RigidBody _rigidBody;
 	
 	public Paddle( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null) : base(pName, pParent) {
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
-		velocity = new Vec2( 0, 0 );
+		//velocity = new Vec2( 0, 0 );
 		ball = pBall;
-		score = 0;		
-	}
+		score = 0;
+
+        _rigidBody = new RigidBody();
+
+        AddComponent(new InputComponent());
+        AddComponent(new PhysicsComponent());
+        AddComponent(new RenderComponent());
+        AddComponent(_rigidBody);
+    }
 
     override public void Update() {
         // input
 
-        velocity.Y = 0; // no move 
-        if (Input.Key.Pressed(Keys.Up)) velocity.Y = -Speed;
-        if (Input.Key.Pressed(Keys.Down)) velocity.Y = Speed;
+        _rigidBody.Velocity.Y = 0; // no move 
+        if (Input.Key.Pressed(Keys.Up)) _rigidBody.Velocity.Y = -Speed;
+        if (Input.Key.Pressed(Keys.Down)) _rigidBody.Velocity.Y = Speed;
 
         // move
-        position.Add(velocity);
+        position.Add(_rigidBody.Velocity);
 
         // collisions & resolve
         if (Intersects(ball.Position, ball.Size)) {
-            if (ball.Velocity.X > 0) {
+            if (ball._rigidBody.Velocity.X > 0) {
                 ball.Position.X = position.X - ball.Size.X;
-            } else if (ball.Velocity.X < 0) {
+            } else if (ball._rigidBody.Velocity.X < 0) {
                 ball.Position.X = position.X + Size.X;
             }
-            ball.Velocity.X = -ball.Velocity.X;
+            ball._rigidBody.Velocity.X = -ball._rigidBody.Velocity.X;
         }
 
         // collisions

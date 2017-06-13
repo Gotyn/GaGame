@@ -14,22 +14,22 @@ public class AutoPaddle : Paddle
 	override public void Update() {
 		// input
 		
-		velocity.Y = 0; // no move 
-		if ( ball.Position.Y+8 > position.Y+32 + 8 ) velocity.Y = +Speed;
-		if ( ball.Position.Y+8 < position.Y+32 - 8 ) velocity.Y = -Speed;
+		_rigidBody.Velocity.Y = 0; // no move 
+		if ( ball.Position.Y+8 > position.Y+32 + 8 ) _rigidBody.Velocity.Y = +Speed;
+		if ( ball.Position.Y+8 < position.Y+32 - 8 ) _rigidBody.Velocity.Y = -Speed;
 		
 		// move
-		position.Add( velocity );
+		position.Add( _rigidBody.Velocity );
 		
 		// collisions & resolve
 		if( Intersects( ball.Position, ball.Size ) ) {
-			if( ball.Velocity.X > 0 ) {
+			if(ball._rigidBody.Velocity.X > 0 ) {
 				ball.Position.X = position.X - ball.Size.X;
-			} else if( ball.Velocity.X < 0 ) {
+			} else if(ball._rigidBody.Velocity.X < 0 ) {
 				ball.Position.X = position.X + Size.X;
 			}
-			ball.Velocity.X = -ball.Velocity.X;
-			ball.Velocity.Y = ( ball.Center.Y - Center.Y ) / 32 + ( (float)(Game.Random.NextDouble())-0.5f ) * 10.0f; // curve randomly
+            ball._rigidBody.Velocity.X = -ball._rigidBody.Velocity.X;
+            ball._rigidBody.Velocity.Y = ( ball.Center.Y - Center.Y ) / 32 + ( (float)(Game.Random.NextDouble())-0.5f ) * 10.0f; // curve randomly
 		
 		}
 		
