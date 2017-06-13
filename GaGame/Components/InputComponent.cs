@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 public class InputComponent : Component {
 
+    public InputComponent() { }
+
     override public void Update() { }
 
 }

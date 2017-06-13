@@ -22,7 +22,9 @@ public class Ball : GameObject
 		position = new Vec2( 312, 232 ); // center of form
 		velocity = new Vec2( 0.0f, 0.0f );
 		Reset(); // sets pos and vel
-        
+
+        AddComponent(new RenderComponent());
+        AddComponent(new PhysicsComponent());
 	}
 
     override public void Update() {
@@ -52,17 +54,11 @@ public class Ball : GameObject
         // see game and paddles
     }
 
-    public void Update( Graphics graphics ) { 
-		// graphics
-		graphics.DrawImage( image, position.X, position.Y );
-	}	
-
 	public bool Intersects( Vec2 otherPosition, Vec2 otherSize ) {
 		return
 		    this.position.X < otherPosition.X+otherSize.X && this.position.X + this.Size.X > otherPosition.X &&
 		    this.position.Y < otherPosition.Y+otherSize.Y && this.position.Y + this.Size.Y > otherPosition.Y;
 	}
-	
 	
 	
 	public void Boost() {

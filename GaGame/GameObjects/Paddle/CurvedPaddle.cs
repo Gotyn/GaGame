@@ -37,10 +37,4 @@ public class CurvedPaddle : Paddle
         if (position.Y < 0) position.Y = 0;
         if (position.Y > 416) position.Y = 416;
     }
-
-    override public void Update( Graphics graphics )
-	{
-		// render
-		//graphics.DrawImage( image, position.X, position.Y );
-	}	
 }

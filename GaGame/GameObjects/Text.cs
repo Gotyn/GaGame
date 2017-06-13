@@ -41,25 +41,25 @@ public class Text : GameObject
 
     }
 
-    virtual public void Update( Graphics graphics )
-	{
-		Debug.Assert(graphics != null );
-		Debug.Assert(paddle != null );
-		// input
+ //   virtual public void Update( Graphics graphics )
+	//{
+	//	Debug.Assert(graphics != null );
+	//	Debug.Assert(paddle != null );
+	//	// input
 
-		// move
+	//	// move
 		
-		// collisions & resolve
+	//	// collisions & resolve
 		
-		// render
-		int digits = 2;
-		string score = "000"+paddle.Score.ToString();
-		for( int d=0; d<digits; d++ ) { // 3 digits left to right
-			int digit = score[ score.Length-digits + d ] - 48; // '0' => 0 etc
-			Rectangle rect = new Rectangle( digit * image.Width/10, 0, image.Width/10, image.Height );
-			graphics.DrawImage( image, position.X + d*image.Width/10, position.Y, rect, GraphicsUnit.Pixel );
-		}
-	}		
+	//	// render
+	//	int digits = 2;
+	//	string score = "000"+paddle.Score.ToString();
+	//	for( int d=0; d<digits; d++ ) { // 3 digits left to right
+	//		int digit = score[ score.Length-digits + d ] - 48; // '0' => 0 etc
+	//		Rectangle rect = new Rectangle( digit * image.Width/10, 0, image.Width/10, image.Height );
+	//		graphics.DrawImage( image, position.X + d*image.Width/10, position.Y, rect, GraphicsUnit.Pixel );
+	//	}
+	//}		
 	
 	public string Value {
 		get {

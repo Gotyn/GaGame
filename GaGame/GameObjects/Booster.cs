@@ -35,13 +35,6 @@ public class Booster : GameObject
         }
     }
 
-    public void Update( Graphics graphics )
-	{
-        // Render
-		graphics.DrawImage( image, position.X, position.Y );
-	}	
-	
-	
 	// Event handlers
 
 	private void DeBoost( Object sender,  Time.TimeoutEvent timeout )

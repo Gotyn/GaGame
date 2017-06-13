@@ -21,11 +21,11 @@ class World : GameObject {
 
         ball = new Ball("Ball", "ball.png", this); // orbitting the window centre
         
-        //leftPaddle = new AutoPaddle("Left", 10, 208, "paddle.png", ball, this);
-        //rightPaddle = new AutoPaddle("Right", 622, 208, "paddle.png", ball, this);
+        leftPaddle = new AutoPaddle("Left", 10, 208, "paddle.png", ball, this);
+        rightPaddle = new AutoPaddle("Right", 622, 208, "paddle.png", ball, this);
 
-        leftPaddle = new Paddle("Left", 10, 208, "paddle.png", ball, this);
-        rightPaddle = new Paddle("Right", 622, 208, "paddle.png", ball, this);
+        //leftPaddle = new Paddle("Left", 10, 208, "paddle.png", ball, this);
+        //rightPaddle = new Paddle("Right", 622, 208, "paddle.png", ball, this);
 
         leftScore = new Text("LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle, this);
         rightScore = new Text("RightScore", 320 + 20, 10, "digits.png", rightPaddle, this);
