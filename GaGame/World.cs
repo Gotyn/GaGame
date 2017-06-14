@@ -37,6 +37,8 @@ class World : GameObject {
     }
 
     override public void Update() {
+        base.Update();
+
         if (ball.Position.X < 0) {
             rightPaddle.IncScore();
             ball.Reset();

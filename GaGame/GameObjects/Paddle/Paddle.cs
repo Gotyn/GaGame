@@ -12,7 +12,7 @@ public class Paddle : GameObject
 {
 	//protected Vec2 velocity = null;
 	
-	protected Ball ball = null;
+	public Ball ball = null;
 	protected uint score;
 	
 	public const float Speed = 5.0f;
@@ -26,41 +26,18 @@ public class Paddle : GameObject
 		ball = pBall;
 		score = 0;
 
-        _rigidBody = new RigidBody();
+        AddComponent(new RigidBody());
+        //AddComponent(new PaddleInput());
 
-        AddComponent(new PaddleInput());
-        AddComponent(new PhysicsComponent());
-        AddComponent(new RenderComponent());
-        AddComponent(_rigidBody);
+        AddComponent(new tempAutoPaddleComp());
+        //AddComponent(new tempManualPaddleComp());
+        
+        //AddComponent(new PhysicsComponent());
+        //AddComponent(new RenderComponent());
+
+        Console.WriteLine("Happens___0");
     }
 
-    override public void Update() {
-        base.Update();
-
-        // input
-
-        _rigidBody.Velocity.Y = 0; // no move 
-        if (Input.Key.Pressed(Keys.Up)) _rigidBody.Velocity.Y = -Speed;
-        if (Input.Key.Pressed(Keys.Down)) _rigidBody.Velocity.Y = Speed;
-
-        // move
-        //position.Add(_rigidBody.Velocity); //rigidbody took over
-
-        // collisions & resolve
-        if (Intersects(ball.Position, ball.Size)) {
-            if (ball._rigidBody.Velocity.X > 0) {
-                ball.Position.X = position.X - ball.Size.X;
-            } else if (ball._rigidBody.Velocity.X < 0) {
-                ball.Position.X = position.X + Size.X;
-            }
-            ball._rigidBody.Velocity.X = -ball._rigidBody.Velocity.X;
-        }
-
-        // collisions
-        if (position.Y < 0) position.Y = 0;
-        if (position.Y > 416) position.Y = 416;
-    }
-	
 	public void IncScore() 
 	{
 		score++;

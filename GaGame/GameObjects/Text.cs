@@ -11,7 +11,7 @@ public class Text : GameObject
 {
 	private string text;
 	
-	private Paddle paddle;
+	public Paddle paddle;
 	
 	
 	public Text( string pName, float pX, float pY, string pImageFile, Paddle pPaddle, GameObject pParent = null ) : base(pName, pParent) {
@@ -19,48 +19,10 @@ public class Text : GameObject
 		position = new Vec2( pX, pY );
 		text = "0";
 		paddle = pPaddle;
+
+        AddComponent(new tempTextComp());
 	}
 
-    override public void Update() {
-        //Debug.Assert(graphics != null);
-        Debug.Assert(paddle != null);
-        // input
-
-        // move
-
-        // collisions & resolve
-
-        // render
-        int digits = 2;
-        string score = "000" + paddle.Score.ToString();
-        for (int d = 0; d < digits; d++) { // 3 digits left to right
-            int digit = score[score.Length - digits + d] - 48; // '0' => 0 etc
-            Rectangle rect = new Rectangle(digit * image.Width / 10, 0, image.Width / 10, image.Height);
-            //graphics.DrawImage(image, position.X + d * image.Width / 10, position.Y, rect, GraphicsUnit.Pixel);
-        }
-
-    }
-
- //   virtual public void Update( Graphics graphics )
-	//{
-	//	Debug.Assert(graphics != null );
-	//	Debug.Assert(paddle != null );
-	//	// input
-
-	//	// move
-		
-	//	// collisions & resolve
-		
-	//	// render
-	//	int digits = 2;
-	//	string score = "000"+paddle.Score.ToString();
-	//	for( int d=0; d<digits; d++ ) { // 3 digits left to right
-	//		int digit = score[ score.Length-digits + d ] - 48; // '0' => 0 etc
-	//		Rectangle rect = new Rectangle( digit * image.Width/10, 0, image.Width/10, image.Height );
-	//		graphics.DrawImage( image, position.X + d*image.Width/10, position.Y, rect, GraphicsUnit.Pixel );
-	//	}
-	//}		
-	
 	public string Value {
 		get {
 			return text;

@@ -88,13 +88,13 @@ public class GameObject : Object {
     }
 
     public void AddComponent(Component component) {
-        componentList.Add(component);
         component.Owner = this;
+        componentList.Add(component);
     }
 
     public void RemoveComponent(Component component) {
-        componentList.Remove(component);
         component.Owner = null;
+        componentList.Remove(component);
     }
 
     public void RemoveComponentOfType(Type type) {
@@ -107,6 +107,7 @@ public class GameObject : Object {
     public List<GameObject> GetChildren {
         get { return childList; }
     }
+
 
     public T GetComponent<T>() where T:Component {
         foreach (Component component in componentList) {

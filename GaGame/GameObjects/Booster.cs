@@ -10,34 +10,22 @@ using System.Windows.Forms;
 
 public class Booster : GameObject
 {
-	private bool active = true;
-	private Ball ball;
+	public bool active = true;
+	public Ball ball;
 	
 	public Booster( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null ) : base (pName, pParent)
 	{
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		
-		ball = pBall;		
+		ball = pBall;
+
+        AddComponent(new tempBoosterComp());
 	}
-
-    override public void Update() {
-        // input
-
-        // move
-
-        // collisions & resolve
-        //Console.WriteLine( active );
-        if (active && Intersects(ball.Position, ball.Size)) {
-            active = false;
-            ball.Boost();
-            Time.Timeout("Deboosting", 0.5f, DeBoost);
-        }
-    }
 
 	// Event handlers
 
-	private void DeBoost( Object sender,  Time.TimeoutEvent timeout )
+	public void DeBoost( Object sender,  Time.TimeoutEvent timeout )
 	{
 		ball.DeBoost();
 		active = true;

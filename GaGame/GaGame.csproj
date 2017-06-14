@@ -54,6 +54,11 @@
     <Compile Include="Components\PhysicsComponent.cs" />
     <Compile Include="Components\RenderComponent.cs" />
     <Compile Include="Components\RigidBody.cs" />
+    <Compile Include="Components\Temp\tempManualPaddleComp.cs" />
+    <Compile Include="Components\Temp\tempAutoPaddleComp.cs" />
+    <Compile Include="Components\Temp\tempBallComp.cs" />
+    <Compile Include="Components\Temp\tempBoosterComp.cs" />
+    <Compile Include="Components\Temp\tempTextComp.cs" />
     <Compile Include="GameObjects\Paddle\AutoPaddle.cs" />
     <Compile Include="GameObjects\Ball.cs" />
     <Compile Include="GameObjects\Booster.cs" />

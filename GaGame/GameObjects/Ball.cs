@@ -12,7 +12,7 @@ public class Ball : GameObject
 {
     //private Vec2 velocity = null;
 	
-	private bool pausing = true;
+	public bool pausing = true;
 	
 	public readonly Vec2 Speed = new Vec2( 10.0f, 10.0f );
 
@@ -29,37 +29,9 @@ public class Ball : GameObject
 
         _rigidBody = new RigidBody();
         AddComponent(_rigidBody);
+        AddComponent(new tempBallComp());
 
         Reset(); // sets pos and vel
-    }
-
-    override public void Update() {
-        base.Update();
-        
-        // input
-        if (Input.Key.Enter(Keys.P)) {
-            pausing = !pausing; // toggle
-            Console.WriteLine("Pausing " + pausing);
-        }
-
-        // move
-        if (!pausing) {
-            //position.Add(_rigidBody.Velocity); //--rigidbody took over
-        }
-
-        // collisions & resolve
-
-        // Y bounds reflect
-        if (position.Y < 0) {
-            position.Y = 0;
-            _rigidBody.Velocity.Y = -_rigidBody.Velocity.Y;
-        }
-        if (position.Y > 480 - 16) { // note: non maintainable literals here, who did this
-            position.Y = 480 - 16;
-            _rigidBody.Velocity.Y = -_rigidBody.Velocity.Y;
-        }
-
-        // see game and paddles
     }
 
 	public bool Intersects( Vec2 otherPosition, Vec2 otherSize ) {
@@ -82,7 +54,7 @@ public class Ball : GameObject
         position.X = 320 - 8;
         position.Y = 240 - 8;
         //velocity.X = 0.5f;
-        _rigidBody.Velocity = new Vec2(Speed.X, (float)(Game.Random.NextDouble() - 0.5) * 2.0f * Speed.Y);
+         _rigidBody.Velocity = new Vec2(Speed.X, (float)(Game.Random.NextDouble() - 0.5) * 2.0f * Speed.Y);
         pausing = true;
         Time.Timeout("Reset", 1.0f, Restart);   // restart after 1 sec.
     }

@@ -62,7 +62,8 @@ public class Game {
         // check collisions and apply reponse and rules		
         // render
 
-        world.UpdateThroughChildren(); //loops through all child objects from World, then calls Update on exit.
+        //world.UpdateThroughChildren(); //loops through all child objects from World, then calls Update on exit.
+        world.Update();
         world.DrawThroughChildren(pGraphics);
 
         Thread.Sleep( 16 ); // roughly 60 fps
