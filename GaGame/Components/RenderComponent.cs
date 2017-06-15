@@ -20,6 +20,7 @@ public class RenderComponent : Component {
             _drawable.Game.AddToDrawables(_drawable);
         }
 
+        Draw(_drawable.Game.Graphics);
 
     }
 
