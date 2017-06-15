@@ -19,7 +19,7 @@ public class Paddle : GameObject
 
     public RigidBody _rigidBody;
 	
-	public Paddle( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null) : base(pName, pParent) {
+	public Paddle(Game pGame, string pName, float pX, float pY, string pImageFile, Ball pBall) : base(pGame, pName) {
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		//velocity = new Vec2( 0, 0 );
@@ -29,11 +29,11 @@ public class Paddle : GameObject
         AddComponent(new RigidBody());
         //AddComponent(new PaddleInput());
 
-        AddComponent(new tempAutoPaddleComp());
+        //AddComponent(new tempAutoPaddleComp());
         //AddComponent(new tempManualPaddleComp());
         
         //AddComponent(new PhysicsComponent());
-        //AddComponent(new RenderComponent());
+        AddComponent(new RenderComponent());
 
         Console.WriteLine("Happens___0");
     }

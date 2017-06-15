@@ -14,14 +14,15 @@ public class Text : GameObject
 	public Paddle paddle;
 	
 	
-	public Text( string pName, float pX, float pY, string pImageFile, Paddle pPaddle, GameObject pParent = null ) : base(pName, pParent) {
+	public Text(Game pGame, string pName, float pX, float pY, string pImageFile, Paddle pPaddle) : base(pGame, pName) {
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( pX, pY );
 		text = "0";
 		paddle = pPaddle;
 
         AddComponent(new tempTextComp());
-	}
+        AddComponent(new RenderComponent());
+    }
 
 	public string Value {
 		get {

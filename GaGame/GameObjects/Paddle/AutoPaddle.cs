@@ -8,6 +8,9 @@ using System.Drawing;
 using System.Windows.Forms;
 
 public class AutoPaddle : Paddle {
-	public AutoPaddle( string pName, float pX, float pY, string pImageFile, Ball pBall, GameObject pParent = null) : base( pName, pX, pY, pImageFile, pBall, pParent ) { }
+	public AutoPaddle(Game pGame, string pName, float pX, float pY, string pImageFile, Ball pBall) : base(pGame, pName, pX, pY, pImageFile, pBall ) {
+        AddComponent(new tempAutoPaddleComp());
+    }
+
 }
 

@@ -28,7 +28,8 @@ public class Window : Form
 	override
 	protected void OnPaint( PaintEventArgs e )  // adapter for caching repaints for updates
 	{
-		game.Update( e.Graphics );
+        game.Graphics = e.Graphics;
+        game.Update();
 	}
 			
 }

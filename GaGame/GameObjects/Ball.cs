@@ -6,6 +6,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections;
 
 
 public class Ball : GameObject
@@ -19,18 +20,17 @@ public class Ball : GameObject
     public RigidBody _rigidBody;
 
 
-    public Ball( string pName, string pImageFile, GameObject pParent = null ) : base (pName, pParent)
+    public Ball(Game pGame, string pName, string pImageFile) : base (pGame, pName)
 	{
 		image = Image.FromFile( pImageFile );
 		position = new Vec2( 312, 232 ); // center of form
 
-        AddComponent(new RenderComponent());
-        AddComponent(new PhysicsComponent());
-
         _rigidBody = new RigidBody();
         AddComponent(_rigidBody);
         AddComponent(new tempBallComp());
-
+        AddComponent(new RenderComponent());
+        AddComponent(new PhysicsComponent());
+        
         Reset(); // sets pos and vel
     }
 
