@@ -8,7 +8,7 @@ using System.Windows.Forms;
 class tempBallComp : Component {
 
     private RigidBody _rigidBody;
-    private Ball _ball;
+    private GameObject _ball;
 
     public tempBallComp() {
 
@@ -18,22 +18,10 @@ class tempBallComp : Component {
         //Lame
         if (_ball == null) {
             _rigidBody = Owner.GetComponent<RigidBody>();
-            _ball = (Ball) Owner;
-        }
-
-        // input
-        if (Input.Key.Enter(Keys.P)) {
-            _ball.pausing = !_ball.pausing; // toggle
-            Console.WriteLine("Pausing " + _ball.pausing);
-        }
-
-        // move
-        if (!_ball.pausing) {
-            //position.Add(_rigidBody.Velocity); //--rigidbody took over
+            _ball = Owner;
         }
 
         // collisions & resolve
-
         // Y bounds reflect
         if (_ball.position.Y < 0) {
             _ball.position.Y = 0;

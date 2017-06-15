@@ -14,7 +14,6 @@ using System.Diagnostics;
 public class Game {
     static private Random random = new Random(0); // seed for repeatability.
     private Window _window;
-    private Graphics _graphics;
 
     [STAThread] // needed to use wpf Keyboard.isKeyPressed when single threaded !
     static public void Main() {
@@ -32,31 +31,36 @@ public class Game {
 	}
 
 
-    //GameObjects
-    public Ball ball;
-    private Text leftScore, rightScore;
-    public Paddle leftPaddle, rightPaddle;
-    private Booster booster1, booster2;
+    
+    private GameObject ball;
+    private BallScript ballScript;
+
+    //private GameObject leftPaddle, rightPaddle;
+
+    //private GameObject leftScore, rightScore;
+    //private GameObject booster1, booster2;
 
     private List<GameObject> gameObjectList = new List<GameObject>();
     private List<GameObject> drawableList = new List<GameObject>();
 
     private void Build() {
-        ball = new Ball(this, "Ball", "ball.png"); // orbitting the window centre
+        ball = new GameObject(this, "Ball");
+        ballScript = new BallScript(ball);
+        ball.AddComponent(ballScript);
 
-        leftPaddle = new AutoPaddle(this, "Left", 10, 208, "paddle.png", ball);
-        rightPaddle = new AutoPaddle(this, "Right", 622, 208, "paddle.png", ball);
+        //leftPaddle = new AutoPaddle(this, "Left", 10, 208, "paddle.png", ball);
+        //rightPaddle = new AutoPaddle(this, "Right", 622, 208, "paddle.png", ball);
 
         //leftPaddle = new Paddle("Left", 10, 208, "paddle.png", ball);
         //rightPaddle = new Paddle("Right", 622, 208, "paddle.png", ball);
 
-        //leftPaddle = new CurvedPaddle("Left", 10, 208, "paddle.png", ball);
-        //rightPaddle = new CurvedPaddle("Right", 622, 208, "paddle.png", ball);
+        //leftPaddle = new ManualPaddleScript(this, "ManualPaddleLeft", 10, 208, "paddle.png", ball);
+        //rightPaddle = new ManualPaddleScript(this, "ManualPaddleRight", 622, 208, "paddle.png", ball);
 
-        leftScore = new Text(this, "LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle);
-        rightScore = new Text(this, "RightScore", 320 + 20, 10, "digits.png", rightPaddle);
-        booster1 = new Booster(this, "Booster", 304, 96, "booster.png", ball);
-        booster2 = new Booster(this, "Booster", 304, 384, "booster.png", ball);
+        //leftScore = new TextScript(this, "LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle);
+        //rightScore = new TextScript(this, "RightScore", 320 + 20, 10, "digits.png", rightPaddle);
+        //booster1 = new BoosterScript(this, "Booster", 304, 96, "booster.png", ball);
+        //booster2 = new BoosterScript(this, "Booster", 304, 384, "booster.png", ball);
 
         //printGameObjectList();
     }
@@ -69,7 +73,7 @@ public class Game {
 
     public void AddToDrawables(GameObject gameObject) {
         Debug.Assert(gameObject != null);
-        gameObjectList.Add(gameObject);
+        drawableList.Add(gameObject);
     }
 
     private void printGameObjectList() {
@@ -85,9 +89,17 @@ public class Game {
     }
 
     private void UpdateGameObjects() {
-        for (int i = gameObjectList.Count - 1; i >= 0; i-- ) {
+        for (int i = gameObjectList.Count - 1; i >= 0; i--) {
             gameObjectList[i].Update();
             //Console.WriteLine("{0} \t\t Got Updated!", gameObjectList[i].Name);
+        }
+    }
+
+    private void DrawDrawables(Graphics graphics) {
+        //Console.WriteLine("Drawables: " + drawableList.Count);
+        for (int i = drawableList.Count - 1; i >= 0; i--) {
+
+            drawableList[i].GetComponent<RenderComponent>().Draw(graphics);
         }
     }
 
@@ -96,7 +108,7 @@ public class Game {
     }
 
     public void Run() {
-		Time.Timeout( "Reset", 1.0f, ball.Restart );	
+		Time.Timeout( "Reset", 1.0f, ball.GetComponent<BallScript>().Restart );	
 		
 		bool running = true;
 		while( running ) { // gameloop
@@ -111,7 +123,7 @@ public class Game {
 		}
 	}
 
-	public void Update() {
+	public void Update(Graphics graphics) {
 		Time.Update();
 		FrameCounter.Update();
 
@@ -122,15 +134,16 @@ public class Game {
         // render
 
         UpdateGameObjects();
+        DrawDrawables(graphics);
 
-        if (ball.Position.X < 0) {
-            rightPaddle.IncScore();
-            ball.Reset();
-        }
-        if (ball.Position.X > 640 - 16) { // note: bad literals detected
-            leftPaddle.IncScore();
-            ball.Reset();
-        }
+        //if (ball.Position.X < 0) {
+        //    rightPaddle.GetComponent<PaddleScript>().IncScore();
+        //    ball.GetComponent<BallScript>().Reset();
+        //}
+        //if (ball.Position.X > 640 - 16) { // note: bad literals detected
+        //    leftPaddle.GetComponent<PaddleScript>().IncScore();
+        //    ball.GetComponent<BallScript>().Reset();
+        //}
 
         Thread.Sleep( 16 ); // roughly 60 fps
 		
@@ -146,7 +159,5 @@ public class Game {
 			return random;
 		}
 	}
-
-    public Graphics Graphics { get => _graphics; set => _graphics = value; }
-}
+ }
 

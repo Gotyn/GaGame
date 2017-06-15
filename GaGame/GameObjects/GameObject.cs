@@ -26,7 +26,7 @@ public class GameObject : Object {
     }
 
     public void Update() {
-        Console.WriteLine("Updateing {0}", name);
+        //Console.WriteLine("Updateing {0}", name);
         //Update Components
         foreach (Component component in componentList) {
             component.Update();
