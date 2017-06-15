@@ -9,6 +9,8 @@ abstract public class Component {
 
     public Component() { }
 
+    virtual public void Start() { }
+
     virtual public void Update() { }
 
     public GameObject Owner { get => _owner; set => _owner = value; }

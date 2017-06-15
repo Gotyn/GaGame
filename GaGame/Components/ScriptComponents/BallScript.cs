@@ -7,48 +7,38 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections;
+using System.Diagnostics;
 
 
 public class BallScript : Component
 {
-    //private Vec2 velocity = null;
-	
-	public bool pausing = true;
-	
 	public readonly Vec2 Speed = new Vec2( 10.0f, 10.0f );
+    private RigidBody _rigidBody;
 
-    public RigidBody _rigidBody;
+    public override void Start() {
+        Owner.Position = new Vec2(312, 232); // center of form
 
-    private GameObject _owner;
-
-
-    public BallScript(GameObject owner) {
-        _owner = owner;
-
-        //owner.image = Image.FromFile(pImageFile);
-        _owner.position = new Vec2(312, 232); // center of form
-
-        _rigidBody = new RigidBody();
-        _owner.AddComponent(_rigidBody);
-        _owner.AddComponent(new tempBallComp());
-        _owner.AddComponent(new RenderComponent());
-        _owner.AddComponent(new PhysicsComponent());
+        _rigidBody = Owner.GetComponent<RigidBody>();
+        Debug.Assert(_rigidBody != null);
 
         Reset(); // sets pos and vel
     }
 
     public override void Update() {
+        // collisions & resolve
         
+        // Y bounds reflect
+        if (Owner.Position.Y < 0) {
+            Owner.Position.Y = 0;
+            _rigidBody.Velocity.Y = -_rigidBody.Velocity.Y;
+        }
+        if (Owner.Position.Y > 480 - 16) { // note: non maintainable literals here, who did this
+            Owner.Position.Y = 480 - 16;
+            _rigidBody.Velocity.Y = -_rigidBody.Velocity.Y;
+        }
     }
 
-    public bool Intersects( Vec2 otherPosition, Vec2 otherSize ) {
-		return
-            _owner.position.X < otherPosition.X+otherSize.X && _owner.position.X + _owner.Size.X > otherPosition.X &&
-            _owner.position.Y < otherPosition.Y+otherSize.Y && _owner.position.Y + _owner.Size.Y > otherPosition.Y;
-	}
-	
-	
-	public void Boost() {
+    public void Boost() {
 		_rigidBody.Velocity = _rigidBody.Velocity * 2.0f;
 	}
 
@@ -58,17 +48,15 @@ public class BallScript : Component
 
 
     public void Reset() {
-        _owner.position.X = 320 - 8;
-        _owner.position.Y = 240 - 8;
+        Owner.Position.X = 320 - 8;
+        Owner.Position.Y = 240 - 8;
         //velocity.X = 0.5f;
-         _rigidBody.Velocity = new Vec2(Speed.X, (float)(Game.Random.NextDouble() - 0.5) * 2.0f * Speed.Y);
-        pausing = true;
+        Owner.GetComponent<RigidBody>().Velocity = new Vec2(Speed.X, (float)(Game.Random.NextDouble() - 0.5) * 2.0f * Speed.Y);
         Time.Timeout("Reset", 1.0f, Restart);   // restart after 1 sec.
     }
 
 	public void Restart(  Object sender,  Time.TimeoutEvent timeout ) 
 	{
-		pausing = false;
 		Console.WriteLine("Restart");
 	}
 

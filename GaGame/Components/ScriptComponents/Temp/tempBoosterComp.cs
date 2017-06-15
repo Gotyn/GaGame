@@ -13,11 +13,11 @@ class tempBoosterComp : Component {
         }
 
 
-        if (_booster.active && _booster.Intersects(_booster.ball.Owner.Position, _booster.ball.Owner.Size)) {
-            _booster.active = false;
-            _booster.ball.Boost();
-            Time.Timeout("Deboosting", 0.5f, _booster.DeBoost);
-        }
+        //if (_booster.active && _booster.Intersects(_booster.ball.Owner.Position, _booster.ball.Owner.Size)) {
+        //    _booster.active = false;
+        //    _booster.ball.Boost();
+        //    Time.Timeout("Deboosting", 0.5f, _booster.DeBoost);
+        //}
     }
 
 }

@@ -33,34 +33,52 @@ public class Game {
 
     
     private GameObject ball;
-    private BallScript ballScript;
-
-    //private GameObject leftPaddle, rightPaddle;
-
-    //private GameObject leftScore, rightScore;
-    //private GameObject booster1, booster2;
+    private GameObject leftPaddle, rightPaddle;
+    private GameObject leftScore, rightScore;
+    private GameObject booster1, booster2;
 
     private List<GameObject> gameObjectList = new List<GameObject>();
     private List<GameObject> drawableList = new List<GameObject>();
 
     private void Build() {
+        //Ball
         ball = new GameObject(this, "Ball");
-        ballScript = new BallScript(ball);
-        ball.AddComponent(ballScript);
+        ball.AddComponent<RigidBody>();
+        ball.AddComponent<RenderComponent>().Image = Image.FromFile("ball.png");
+        ball.AddComponent<PhysicsComponent>();
+        ball.AddComponent<BallScript>();
 
-        //leftPaddle = new AutoPaddle(this, "Left", 10, 208, "paddle.png", ball);
-        //rightPaddle = new AutoPaddle(this, "Right", 622, 208, "paddle.png", ball);
+        //LeftPaddle
+        leftPaddle = new GameObject(this, "LeftPaddle", new Vec2(10, 208));
+        leftPaddle.AddComponent<RigidBody>();
+        leftPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
+        leftPaddle.AddComponent<PhysicsComponent>();
+        leftPaddle.AddComponent<PaddleInput>();
+        leftPaddle.AddComponent<PaddleScript>();
 
-        //leftPaddle = new Paddle("Left", 10, 208, "paddle.png", ball);
-        //rightPaddle = new Paddle("Right", 622, 208, "paddle.png", ball);
+        //RightPaddle
+        rightPaddle = new GameObject(this, "RightPaddle", new Vec2(622, 208));
+        rightPaddle.AddComponent<RigidBody>();
+        rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
+        rightPaddle.AddComponent<PhysicsComponent>();
+        rightPaddle.AddComponent<PaddleInput>();
+        rightPaddle.AddComponent<PaddleScript>();
 
-        //leftPaddle = new ManualPaddleScript(this, "ManualPaddleLeft", 10, 208, "paddle.png", ball);
-        //rightPaddle = new ManualPaddleScript(this, "ManualPaddleRight", 622, 208, "paddle.png", ball);
+        //LeftScore
+        leftScore = new GameObject(this, "LeftScore", new Vec2(320 - 52 - 66, 10));
+        leftScore.AddComponent<RenderComponent>().Image = Image.FromFile("digits.png");
 
-        //leftScore = new TextScript(this, "LeftScore", 320 - 20 - 66, 10, "digits.png", leftPaddle);
-        //rightScore = new TextScript(this, "RightScore", 320 + 20, 10, "digits.png", rightPaddle);
-        //booster1 = new BoosterScript(this, "Booster", 304, 96, "booster.png", ball);
-        //booster2 = new BoosterScript(this, "Booster", 304, 384, "booster.png", ball);
+        //RightScore
+        rightScore = new GameObject(this, "RightScore", new Vec2(320 + 20, 10));
+        rightScore.AddComponent<RenderComponent>().Image = Image.FromFile("digits.png");
+
+        //Booster1
+        booster1 = new GameObject(this, "Booster1", new Vec2(304, 96));
+        booster1.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
+
+        //Booster2
+        booster2 = new GameObject(this, "Booster2", new Vec2(304, 384));
+        booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
 
         //printGameObjectList();
     }
@@ -103,7 +121,7 @@ public class Game {
         }
     }
 
-    public GameObject Find(string pName) {
+    public GameObject FindGameObject(string pName) {
         return gameObjectList.Find(go => go.Name == pName);
     }
 

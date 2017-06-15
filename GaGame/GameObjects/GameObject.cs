@@ -9,9 +9,7 @@ using System.Drawing;
 public class GameObject : Object {
     private string name = "New GameObject";
     private Game _game;
-
-    public Image image; //shouldnt be part of gameobject maybe.
-    public Vec2 position = null;
+    private Vec2 _position = null;
 
     public List<Component> componentList = new List<Component>();
 
@@ -25,6 +23,10 @@ public class GameObject : Object {
         Name = pName;
     }
 
+    public GameObject(Game pGame, string pName, Vec2 pPosition) : this(pGame, pName) {
+        Position = pPosition;
+    }
+
     public void Update() {
         //Console.WriteLine("Updateing {0}", name);
         //Update Components
@@ -33,28 +35,24 @@ public class GameObject : Object {
         }
     }
 
-    public Vec2 Center {
-        get {
-            return position + 0.5f * Size;
-        }
-    }
-    public Vec2 Position {
-        get {
-            return position;
-        }
-    }
-    public Vec2 Size {
-        get {
-            return new Vec2(image.Width, image.Height);
-        }
-    }
+  
 
     public string Name { get => name; set => name = value; }
     public Game Game { get => _game; }
+    public Vec2 Position { get => _position; set => _position = value; }
 
     public void AddComponent(Component component) {
         component.Owner = this;
         componentList.Add(component);
+        component.Start();
+    }
+
+    public T AddComponent<T>() where T : Component, new() {
+        T component = new T();
+        component.Owner = this;
+        componentList.Add(component);
+        component.Start();
+        return component;
     }
 
     public void RemoveComponent(Component component) {

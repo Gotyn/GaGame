@@ -28,8 +28,21 @@ public class RenderComponent : Component {
     }
 
     public void Draw(Graphics graphics) {
-        //Debug.Assert(graphics != null);
-        //Debug.Assert(Image != null);
-        //graphics.DrawImage(_image, _drawable.position.X, _drawable.position.Y);
+        Debug.Assert(graphics != null);
+        Debug.Assert(Image != null);
+        graphics.DrawImage(_image, _drawable.Position.X, _drawable.Position.Y);
     }
+
+    public Vec2 Size {
+        get {
+            return new Vec2(_image.Width, _image.Height);
+        }
+    }
+
+    public Vec2 Center {
+        get {
+            return _drawable.Position + 0.5f * Size;
+        }
+    }
+
 }

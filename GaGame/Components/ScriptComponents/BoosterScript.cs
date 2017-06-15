@@ -14,14 +14,15 @@ public class BoosterScript : Component
 	public BallScript ball;
 	
 	public BoosterScript(Game pGame, string pName, float pX, float pY, string pImageFile, GameObject pBall) {
-        Owner.image = Image.FromFile( pImageFile );
-        Owner.position = new Vec2( pX, pY );
+        Owner.Position = new Vec2( pX, pY );
 		
 		ball = pBall.GetComponent<BallScript>();
 
         Owner.AddComponent(new tempBoosterComp());
         Owner.AddComponent(new RenderComponent());
-	}
+
+        Owner.GetComponent<RenderComponent>().Image = Image.FromFile(pImageFile);
+    }
 
 	// Event handlers
 
@@ -34,16 +35,16 @@ public class BoosterScript : Component
 
 	// Tools
 	public bool Intersects( Vec2 otherPosition, Vec2 otherSize ) {
-		return
-            Owner.position.X < otherPosition.X+otherSize.X && Owner.position.X + Owner.Size.X > otherPosition.X &&
-            Owner.position.Y < otherPosition.Y+otherSize.Y && Owner.position.Y + Owner.Size.Y > otherPosition.Y;
-	}
+        return
+            false; //Owner.position.X < otherPosition.X+otherSize.X && Owner.position.X + Owner.Size.X > otherPosition.X &&
+                  //Owner.position.Y < otherPosition.Y+otherSize.Y && Owner.position.Y + Owner.Size.Y > otherPosition.Y;
+    }
 	
 	
 	public void Reset() 
 	{
-        Owner.position.X = 320-8;
-        Owner.position.Y = 240-8;
+        Owner.Position.X = 320-8;
+        Owner.Position.Y = 240-8;
 	}
 	
 }

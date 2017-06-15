@@ -15,8 +15,7 @@ public class TextScript : Component
 	
 	
 	public TextScript(Game pGame, string pName, float pX, float pY, string pImageFile, GameObject pPaddle) {
-        Owner.image = Image.FromFile( pImageFile );
-        Owner.position = new Vec2( pX, pY );
+        Owner.Position = new Vec2( pX, pY );
 		text = "0";
 		paddle = pPaddle.GetComponent<PaddleScript>();
 
