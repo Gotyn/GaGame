@@ -7,9 +7,12 @@ using System.Diagnostics;
 
 public class RigidBody : Component {
     private Vec2 _velocity = new Vec2();
+    private Vec2 _previousPosition = new Vec2();
 
     public override void Update() {
         Debug.Assert(Owner.Position != null);
+
+        _previousPosition = new Vec2(Owner.Position.X, Owner.Position.Y);
         Owner.Position.Add(Velocity);
     }
     
@@ -18,4 +21,5 @@ public class RigidBody : Component {
     }
 
     public Vec2 Velocity { get => _velocity; set => _velocity = value; }
+    public Vec2 PreviousPosition { get => _previousPosition; }
 }

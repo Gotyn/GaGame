@@ -10,6 +10,7 @@ public class GameObject : Object {
     private string name = "New GameObject";
     private Game _game;
     private Vec2 _position = null;
+    private Vec2 _size = null;
 
     public List<Component> componentList = new List<Component>();
 
@@ -40,6 +41,7 @@ public class GameObject : Object {
     public string Name { get => name; set => name = value; }
     public Game Game { get => _game; }
     public Vec2 Position { get => _position; set => _position = value; }
+    public Vec2 Size { get => _size; set => _size = value; }
 
     public void AddComponent(Component component) {
         component.Owner = this;

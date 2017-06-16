@@ -17,16 +17,19 @@ public class BoosterScript : Component
         Owner.Position = new Vec2( pX, pY );
 		
 		ball = pBall.GetComponent<BallScript>();
-
-        Owner.AddComponent(new tempBoosterComp());
-        Owner.AddComponent(new RenderComponent());
-
-        Owner.GetComponent<RenderComponent>().Image = Image.FromFile(pImageFile);
     }
 
-	// Event handlers
+    // Event handlers
+    public override void Update() {
+        //if (_booster.active && _booster.Intersects(_booster.ball.Owner.Position, _booster.ball.Owner.Size)) {
+        //    _booster.active = false;
+        //    _booster.ball.Boost();
+        //    Time.Timeout("Deboosting", 0.5f, _booster.DeBoost);
+        //}
+    }
 
-	public void DeBoost( Object sender,  Time.TimeoutEvent timeout )
+
+    public void DeBoost( Object sender,  Time.TimeoutEvent timeout )
 	{
 		ball.DeBoost();
 		active = true;

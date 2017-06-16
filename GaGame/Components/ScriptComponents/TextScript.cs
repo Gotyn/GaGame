@@ -9,27 +9,47 @@ using System.Drawing;
 
 public class TextScript : Component
 {
-	private string text;
+	private string _text;
 	
-	public PaddleScript paddle;
+	private GameObject _paddle;
 	
-	
-	public TextScript(Game pGame, string pName, float pX, float pY, string pImageFile, GameObject pPaddle) {
-        Owner.Position = new Vec2( pX, pY );
-		text = "0";
-		paddle = pPaddle.GetComponent<PaddleScript>();
+	public TextScript() {}
 
-        Owner.AddComponent(new tempTextComp());
-        Owner.AddComponent(new RenderComponent());
+    public override void Start() {
+        _text = "0";
     }
 
-	public string Value {
+    public override void Update() {
+        //Debug.Assert(graphics != null);
+        Debug.Assert(_paddle != null);
+
+        // input
+
+        // move
+
+        // collisions & resolve
+
+        // render
+        int digits = 2;
+        string score = "000" + _paddle.GetComponent<PaddleScript>().Score.ToString();
+        for (int d = 0; d < digits; d++) { // 3 digits left to right
+            int digit = score[score.Length - digits + d] - 48; // '0' => 0 etc
+            //Rectangle rect = new Rectangle(digit * _text.paddle.image.Width / 10, 0, _text.paddle.image.Width / 10, _text.paddle.image.Height);
+            //graphics.DrawImage(image, position.X + d * image.Width / 10, position.Y, rect, GraphicsUnit.Pixel);
+        }
+    }
+
+
+
+    public string Value {
 		get {
-			return text;
+			return _text;
 		}
 		set {
-			text = value;
+			_text = value;
 		}
 	}
+
+    public GameObject Paddle { get => _paddle; set => _paddle = value; }
 }
 
