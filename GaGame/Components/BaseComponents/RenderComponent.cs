@@ -8,40 +8,44 @@ using System.Diagnostics;
 using System.Collections;
 
 public class RenderComponent : Component {
-    private GameObject _drawable;
     private Image _image;
+    bool set = false;
 
     public Image Image { get => _image; set => _image = value; }
 
-    public RenderComponent() {
+    public override void Start() {
+        Owner.Game.AddToDrawables(Owner);
+        
     }
 
+    public RenderComponent() {}
     public RenderComponent(Image image) {
         Image = image;
     }
 
     override public void Update() {
-        if (_drawable == null) {
-            _drawable = Owner;
-            _drawable.Game.AddToDrawables(_drawable);
+        if (!set) {
+            Owner.Size = Size;
+            set = true;
         }
     }
 
     public void Draw(Graphics graphics) {
         Debug.Assert(graphics != null);
         Debug.Assert(Image != null);
-        graphics.DrawImage(_image, _drawable.Position.X, _drawable.Position.Y);
+        graphics.DrawImage(_image, Owner.Position.X, Owner.Position.Y);
     }
 
     public Vec2 Size {
         get {
+            Debug.Assert(_image != null);
             return new Vec2(_image.Width, _image.Height);
         }
     }
 
     public Vec2 Center {
         get {
-            return _drawable.Position + 0.5f * Size;
+            return Owner.Position + 0.5f * Size;
         }
     }
 
