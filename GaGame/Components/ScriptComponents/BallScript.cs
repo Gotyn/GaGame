@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 public class BallScript : Component
 {
-	public readonly Vec2 Speed = new Vec2( 10.0f, 10.0f );
+	public readonly Vec2 Speed = new Vec2( 5.0f, 5.0f );
     private RigidBody _rigidBody;
 
     public override void Start() {

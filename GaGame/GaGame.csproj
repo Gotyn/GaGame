@@ -50,9 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollisionManager.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Components\BaseComponents\Component.cs" />
     <Compile Include="Components\BaseComponents\PaddleInput.cs" />
-    <Compile Include="Components\BaseComponents\PhysicsComponent.cs" />
     <Compile Include="Components\BaseComponents\RenderComponent.cs" />
     <Compile Include="Components\BaseComponents\RigidBody.cs" />
     <Compile Include="Components\ScriptComponents\Temp\tempAutoPaddleComp.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Components\ScriptComponents\PaddleScript.cs" />
-    <Compile Include="Components\ScriptComponents\TextScript.cs" />
+    <Compile Include="Components\ScriptComponents\TextComponent.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="Window.cs">

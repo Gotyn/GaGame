@@ -37,10 +37,10 @@ public class Game {
     private GameObject leftScore, rightScore;
     private GameObject booster1, booster2;
 
-    GameObject dummy;
+    //GameObject dummy;
 
     private List<GameObject> gameObjectList = new List<GameObject>();
-    private List<GameObject> drawableList = new List<GameObject>();
+    private List<RenderComponent> drawableList = new List<RenderComponent>();
 
     private void Build() {
         _collisionManager = new CollisionManager(this);
@@ -49,14 +49,12 @@ public class Game {
         ball = new GameObject(this, "Ball");
         ball.AddComponent<RigidBody>();
         ball.AddComponent<RenderComponent>().Image = Image.FromFile("ball.png");
-        ball.AddComponent<PhysicsComponent>();
         ball.AddComponent<BallScript>();
 
         //LeftPaddle
         leftPaddle = new GameObject(this, "LeftPaddle", new Vec2(10, 208));
         leftPaddle.AddComponent<RigidBody>();
         leftPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
-        leftPaddle.AddComponent<PhysicsComponent>();
         leftPaddle.AddComponent<PaddleInput>();
         leftPaddle.AddComponent<PaddleScript>();
 
@@ -68,29 +66,31 @@ public class Game {
         rightPaddle = new GameObject(this, "RightPaddle", new Vec2(622, 328 /*622, 208*/));
         rightPaddle.AddComponent<RigidBody>();
         rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
-        rightPaddle.AddComponent<PhysicsComponent>();
         rightPaddle.AddComponent<PaddleInput>();
         rightPaddle.AddComponent<PaddleScript>();
 
         //LeftScore
-        leftScore = new GameObject(this, "LeftScore", new Vec2(320 - 52 - 66, 10));
-        leftScore.AddComponent<RenderComponent>().Image = Image.FromFile("digits.png");
-        leftScore.AddComponent<TextScript>().Paddle = leftPaddle;
+        leftScore = new GameObject(this, "LeftScore", new Vec2(320 - 20 - 66, 10));
+        TextComponent textLeft = new TextComponent(Image.FromFile("digits.png"));
+        textLeft.Paddle = leftPaddle;
+        leftScore.AddComponent(textLeft);
 
         //RightScore
         rightScore = new GameObject(this, "RightScore", new Vec2(320 + 20, 10));
-        rightScore.AddComponent<RenderComponent>().Image = Image.FromFile("digits.png");
-        rightScore.AddComponent<TextScript>().Paddle = rightPaddle;
+        TextComponent textRight = new TextComponent(Image.FromFile("digits.png"));
+        textRight.Paddle = rightPaddle;
+        rightScore.AddComponent(textRight);
 
 
         //Booster1
         booster1 = new GameObject(this, "Booster1", new Vec2(304, 96));
         booster1.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
+        booster1.AddComponent<BoosterScript>();
 
         //Booster2
         booster2 = new GameObject(this, "Booster2", new Vec2(304, 384));
         booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
-
+        booster2.AddComponent<BoosterScript>();
         //printGameObjectList();
     }
 
@@ -126,14 +126,14 @@ public class Game {
         _collisionManager.CheckCollision(ball, leftPaddle);
         DrawDrawables(graphics);
 
-        //if (ball.Position.X < 0) {
-        //    rightPaddle.GetComponent<PaddleScript>().IncScore();
-        //    ball.GetComponent<BallScript>().Reset();
-        //}
-        //if (ball.Position.X > 640 - 16) { // note: bad literals detected
-        //    leftPaddle.GetComponent<PaddleScript>().IncScore();
-        //    ball.GetComponent<BallScript>().Reset();
-        //}
+        if (ball.Position.X < 0) {
+            rightPaddle.GetComponent<PaddleScript>().IncScore();
+            ball.GetComponent<BallScript>().Reset();
+        }
+        if (ball.Position.X > 640 - 16) { // note: bad literals detected
+            leftPaddle.GetComponent<PaddleScript>().IncScore();
+            ball.GetComponent<BallScript>().Reset();
+        }
 
         Thread.Sleep( 16 ); // roughly 60 fps
 		
@@ -156,19 +156,13 @@ public class Game {
         gameObjectList.Add(gameObject);
     }
 
-    public void AddToDrawables(GameObject gameObject) {
-        Debug.Assert(gameObject != null);
-        drawableList.Add(gameObject);
+    public void AddToDrawables(RenderComponent drawable) {
+        Debug.Assert(drawable != null);
+        drawableList.Add(drawable);
     }
 
     private void printGameObjectList() {
         foreach (GameObject go in gameObjectList) {
-            Console.WriteLine(go.Name);
-        }
-    }
-
-    private void printDrawables() {
-        foreach (GameObject go in drawableList) {
             Console.WriteLine(go.Name);
         }
     }
@@ -184,7 +178,7 @@ public class Game {
         //Console.WriteLine("Drawables: " + drawableList.Count);
         for (int i = drawableList.Count - 1; i >= 0; i--) {
 
-            drawableList[i].GetComponent<RenderComponent>().Draw(graphics);
+            drawableList[i].Draw(graphics);
         }
     }
 

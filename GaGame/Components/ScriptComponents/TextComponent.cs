@@ -7,35 +7,27 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 
-public class TextScript : Component
+public class TextComponent : RenderComponent
 {
 	private string _text;
 	
 	private GameObject _paddle;
-	
-	public TextScript() {}
+
+    public TextComponent() { }
+    public TextComponent(Image image) : base(image) { }
 
     public override void Start() {
+        base.Start();
         _text = "0";
     }
 
-    public override void Update() {
-        //Debug.Assert(graphics != null);
-        Debug.Assert(_paddle != null);
-
-        // input
-
-        // move
-
-        // collisions & resolve
-
-        // render
+    public override void Draw(Graphics graphics) {
         int digits = 2;
         string score = "000" + _paddle.GetComponent<PaddleScript>().Score.ToString();
         for (int d = 0; d < digits; d++) { // 3 digits left to right
             int digit = score[score.Length - digits + d] - 48; // '0' => 0 etc
-            //Rectangle rect = new Rectangle(digit * _text.paddle.image.Width / 10, 0, _text.paddle.image.Width / 10, _text.paddle.image.Height);
-            //graphics.DrawImage(image, position.X + d * image.Width / 10, position.Y, rect, GraphicsUnit.Pixel);
+            Rectangle rect = new Rectangle(digit * Image.Width / 10, 0, Image.Width / 10, Image.Height);
+            graphics.DrawImage(Image, Owner.Position.X + d * Image.Width / 10, Owner.Position.Y, rect, GraphicsUnit.Pixel);
         }
     }
 

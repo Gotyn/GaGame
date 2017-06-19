@@ -13,19 +13,17 @@ public class BoosterScript : Component
 	public bool active = true;
 	public BallScript ball;
 	
-	public BoosterScript(Game pGame, string pName, float pX, float pY, string pImageFile, GameObject pBall) {
-        Owner.Position = new Vec2( pX, pY );
-		
-		ball = pBall.GetComponent<BallScript>();
+    public override void Start() {
+        ball = Owner.Game.FindGameObject("Ball").GetComponent<BallScript>();
     }
 
     // Event handlers
     public override void Update() {
-        //if (_booster.active && _booster.Intersects(_booster.ball.Owner.Position, _booster.ball.Owner.Size)) {
-        //    _booster.active = false;
-        //    _booster.ball.Boost();
-        //    Time.Timeout("Deboosting", 0.5f, _booster.DeBoost);
-        //}
+        if (active && Intersects(ball.Owner.Position, ball.Owner.GetComponent<RenderComponent>().Size)) {
+            active = false;
+            ball.Boost();
+            Time.Timeout("Deboosting", 0.5f, DeBoost);
+        }
     }
 
 
@@ -39,8 +37,8 @@ public class BoosterScript : Component
 	// Tools
 	public bool Intersects( Vec2 otherPosition, Vec2 otherSize ) {
         return
-            false; //Owner.position.X < otherPosition.X+otherSize.X && Owner.position.X + Owner.Size.X > otherPosition.X &&
-                  //Owner.position.Y < otherPosition.Y+otherSize.Y && Owner.position.Y + Owner.Size.Y > otherPosition.Y;
+            Owner.Position.X < otherPosition.X+otherSize.X && Owner.Position.X + Owner.Size.X > otherPosition.X &&
+            Owner.Position.Y < otherPosition.Y+otherSize.Y && Owner.Position.Y + Owner.Size.Y > otherPosition.Y;
     }
 	
 	

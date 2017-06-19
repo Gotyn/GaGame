@@ -14,8 +14,7 @@ public class RenderComponent : Component {
     public Image Image { get => _image; set => _image = value; }
 
     public override void Start() {
-        Owner.Game.AddToDrawables(Owner);
-        
+        Owner.Game.AddToDrawables(this);
     }
 
     public RenderComponent() {}
@@ -30,7 +29,7 @@ public class RenderComponent : Component {
         }
     }
 
-    public void Draw(Graphics graphics) {
+    virtual public void Draw(Graphics graphics) {
         Debug.Assert(graphics != null);
         Debug.Assert(Image != null);
         graphics.DrawImage(_image, Owner.Position.X, Owner.Position.Y);
@@ -38,7 +37,7 @@ public class RenderComponent : Component {
 
     public Vec2 Size {
         get {
-            Debug.Assert(_image != null);
+            Debug.Assert(_image != null, "Image not set. (" + Owner.Name + ")");
             return new Vec2(_image.Width, _image.Height);
         }
     }
