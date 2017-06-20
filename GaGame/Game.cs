@@ -42,18 +42,26 @@ public class Game {
     private List<GameObject> gameObjectList = new List<GameObject>();
     private List<RenderComponent> drawableList = new List<RenderComponent>();
 
+    static int MAX_STARTEVENTS = 100;
+    private int _startQueHead = 0;
+    private int _startQueTail = 0;
+    Component[] componentStartQue = new Component[MAX_STARTEVENTS];
+    
+
     private void Build() {
         _collisionManager = new CollisionManager(this);
 
         //Ball
         ball = new GameObject(this, "Ball");
         ball.AddComponent<RigidBody>();
+        ball.AddComponent<Collider>();
         ball.AddComponent<RenderComponent>().Image = Image.FromFile("ball.png");
         ball.AddComponent<BallScript>();
 
         //LeftPaddle
         leftPaddle = new GameObject(this, "LeftPaddle", new Vec2(10, 208));
         leftPaddle.AddComponent<RigidBody>();
+        leftPaddle.AddComponent<Collider>();
         leftPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
         leftPaddle.AddComponent<PaddleInput>();
         leftPaddle.AddComponent<PaddleScript>();
@@ -65,22 +73,20 @@ public class Game {
         //RightPaddle
         rightPaddle = new GameObject(this, "RightPaddle", new Vec2(622, 328 /*622, 208*/));
         rightPaddle.AddComponent<RigidBody>();
+        rightPaddle.AddComponent<Collider>();
         rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
         rightPaddle.AddComponent<PaddleInput>();
         rightPaddle.AddComponent<PaddleScript>();
 
         //LeftScore
         leftScore = new GameObject(this, "LeftScore", new Vec2(320 - 20 - 66, 10));
-        TextComponent textLeft = new TextComponent(Image.FromFile("digits.png"));
-        textLeft.Paddle = leftPaddle;
-        leftScore.AddComponent(textLeft);
+        leftScore.AddComponent<TextComponent>().Paddle = leftPaddle;
+        leftScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
 
         //RightScore
         rightScore = new GameObject(this, "RightScore", new Vec2(320 + 20, 10));
-        TextComponent textRight = new TextComponent(Image.FromFile("digits.png"));
-        textRight.Paddle = rightPaddle;
-        rightScore.AddComponent(textRight);
-
+        rightScore.AddComponent<TextComponent>().Paddle = rightPaddle;
+        rightScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
 
         //Booster1
         booster1 = new GameObject(this, "Booster1", new Vec2(304, 96));
@@ -92,6 +98,8 @@ public class Game {
         booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
         booster2.AddComponent<BoosterScript>();
         //printGameObjectList();
+
+        HandleEvents();
     }
 
     public void Run() {
@@ -122,8 +130,10 @@ public class Game {
 
 
         UpdateGameObjects();
-        _collisionManager.CheckCollision(ball, rightPaddle);
-        _collisionManager.CheckCollision(ball, leftPaddle);
+        _collisionManager.Update();
+        //_collisionManager.CheckCollision(ball, rightPaddle);
+        //_collisionManager.CheckCollision(ball, leftPaddle);
+        HandleEvents();
         DrawDrawables(graphics);
 
         if (ball.Position.X < 0) {
@@ -185,5 +195,27 @@ public class Game {
     public GameObject FindGameObject(string pName) {
         return gameObjectList.Find(go => go.Name == pName);
     }
+
+    public void HandleEvents() {
+        _collisionManager.DoCollisionEvents();
+        doComponentEvents();
+    }
+
+    public void RegisterForCollisionChecks(GameObject gameObject) {
+        _collisionManager.AddCollidingObject(gameObject);
+    }
+
+    public void AddComponentToStartQue(Component component) {
+        componentStartQue[_startQueTail] = component;
+        _startQueTail = (_startQueTail + 1) % MAX_STARTEVENTS;
+    }
+
+    private void doComponentEvents() {
+        while (_startQueTail != _startQueHead) {
+            componentStartQue[_startQueHead].Start();
+            _startQueHead = (_startQueHead + 1) % MAX_STARTEVENTS;
+        }
+    }
+
 }
 

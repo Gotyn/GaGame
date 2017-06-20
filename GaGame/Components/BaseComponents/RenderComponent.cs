@@ -9,24 +9,17 @@ using System.Collections;
 
 public class RenderComponent : Component {
     private Image _image;
-    bool set = false;
 
     public Image Image { get => _image; set => _image = value; }
 
     public override void Start() {
+        Owner.Size = Size;
         Owner.Game.AddToDrawables(this);
     }
 
     public RenderComponent() {}
     public RenderComponent(Image image) {
         Image = image;
-    }
-
-    override public void Update() {
-        if (!set) {
-            Owner.Size = Size;
-            set = true;
-        }
     }
 
     virtual public void Draw(Graphics graphics) {

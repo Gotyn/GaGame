@@ -46,14 +46,14 @@ public class GameObject : Object {
     public void AddComponent(Component component) {
         component.Owner = this;
         componentList.Add(component);
-        component.Start();
+        _game.AddComponentToStartQue(component);
     }
 
     public T AddComponent<T>() where T : Component, new() {
         T component = new T();
         component.Owner = this;
         componentList.Add(component);
-        component.Start();
+        _game.AddComponentToStartQue(component);
         return component;
     }
 
@@ -86,4 +86,7 @@ public class GameObject : Object {
         return returnList;
     }
 
+    public void OnCollision(GameObject other) {
+        Console.WriteLine(Name + " just had an epic collision with " + other.Name);
+    }
 }
