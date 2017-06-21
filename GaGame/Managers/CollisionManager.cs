@@ -11,12 +11,12 @@ class CollisionManager {
     private CollisionEvent[] _collisionEvents = new CollisionEvent[MAX_PENDING];
     
     private List<GameObject> _colliders = new List<GameObject>();
-    private int _head, _tail;
+    //private int _head, _tail;
 
     public CollisionManager(Game game) {
         _game = game;
-        _head = 0;
-        _tail = 0;
+        //_head = 0;
+        //_tail = 0;
     }
 
     public void Update() {
@@ -42,25 +42,24 @@ class CollisionManager {
             bRigidBody.Velocity.X *= -1;
 
             //raise an event about this epic collision
-            addCollisionEvent(a, b);
-            
-
+            Locator.EventManager.AddEvent(new CollisionEvent(a, b));
+            Locator.EventManager.AddEvent(new CollisionEvent(b, a));
         }
     }
 
-    private void addCollisionEvent(GameObject a, GameObject b) {
-        _collisionEvents[_tail] = new CollisionEvent(a, b);
-        _tail = (_tail + 1) % MAX_PENDING;
-    }
+    //private void addCollisionEvent(GameObject a, GameObject b) {
+    //    _collisionEvents[_tail] = new CollisionEvent(a, b);
+    //    _tail = (_tail + 1) % MAX_PENDING;
+    //}
 
-    public void DoCollisionEvents() {
-        while (_tail != _head) {
-            _collisionEvents[_head].A_Collidee.OnCollision(_collisionEvents[_head].B_Collidee);
-            _collisionEvents[_head].B_Collidee.OnCollision(_collisionEvents[_head].A_Collidee);
+    //public void DoCollisionEvents() {
+    //    while (_tail != _head) {
+    //        _collisionEvents[_head].A_Collidee.OnCollision(_collisionEvents[_head].B_Collidee);
+    //        _collisionEvents[_head].B_Collidee.OnCollision(_collisionEvents[_head].A_Collidee);
 
-            _head = (_head + 1) % MAX_PENDING;
-        }
-    }
+    //        _head = (_head + 1) % MAX_PENDING;
+    //    }
+    //}
 
     public void AddCollidingObject(GameObject collider) {
         _colliders.Add(collider);

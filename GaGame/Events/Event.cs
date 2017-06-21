@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Event {
-
-
-
+abstract class Event {
+    public static void Add(EventHandler<Event> pHandler) { }
+    public abstract void Deliver();
 }

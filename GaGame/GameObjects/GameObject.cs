@@ -29,14 +29,10 @@ public class GameObject : Object {
     }
 
     public void Update() {
-        //Console.WriteLine("Updateing {0}", name);
-        //Update Components
         foreach (Component component in componentList) {
             component.Update();
         }
     }
-
-  
 
     public string Name { get => name; set => name = value; }
     public Game Game { get => _game; }
@@ -46,14 +42,14 @@ public class GameObject : Object {
     public void AddComponent(Component component) {
         component.Owner = this;
         componentList.Add(component);
-        _game.AddComponentToStartQue(component);
+        Locator.EventManager.AddEvent(new StartEvent(component));
     }
 
     public T AddComponent<T>() where T : Component, new() {
         T component = new T();
         component.Owner = this;
         componentList.Add(component);
-        _game.AddComponentToStartQue(component);
+        Locator.EventManager.AddEvent(new StartEvent(component));
         return component;
     }
 

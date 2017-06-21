@@ -49,7 +49,11 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\CollisionEvent.cs" />
     <Compile Include="Components\BaseComponents\Collider.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\StartEvent.cs" />
+    <Compile Include="Locator.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Components\BaseComponents\Component.cs" />
@@ -65,6 +69,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="Components\ScriptComponents\PaddleScript.cs" />
     <Compile Include="Components\ScriptComponents\TextComponent.cs" />
+    <Compile Include="Managers\EventManager.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="Window.cs">

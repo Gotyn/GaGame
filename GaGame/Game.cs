@@ -108,7 +108,7 @@ public class Game {
         booster2.AddComponent<BoosterScript>();
         #endregion
 
-        HandleEvents();
+        Locator.EventManager.DeliverEvents();
     }
 
     public void Run() {
@@ -138,7 +138,8 @@ public class Game {
         while (lag >= MS_PER_UPDATE) {
             updateGameObjects();
             _collisionManager.Update();
-            HandleEvents();
+
+            Locator.EventManager.DeliverEvents(); 
 
             //ScoreBounds
             if (ball.Position.X < 0) {
@@ -204,11 +205,6 @@ public class Game {
         return gameObjectList.Find(go => go.Name == pName);
     }
 
-    public void HandleEvents() {
-        _collisionManager.DoCollisionEvents();
-        doComponentEvents();
-    }
-
     public void RegisterForCollisionChecks(GameObject gameObject) {
         _collisionManager.AddCollidingObject(gameObject);
     }
@@ -224,6 +220,5 @@ public class Game {
             _startQueHead = (_startQueHead + 1) % MAX_STARTEVENTS;
         }
     }
-
 }
 
