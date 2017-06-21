@@ -43,7 +43,7 @@ static public class Input
 		{
 			float time = 0;
 			if( keys.TryGetValue( key, out time ) ) {
-				return time > Time.Now - Time.Step;
+				return time > Time.Now - Time.UpdateStep; //changed to work between updates (instead of between frames).
 			}
 			return false;
 		}

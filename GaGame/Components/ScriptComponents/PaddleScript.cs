@@ -21,6 +21,7 @@ public class PaddleScript : Component
         _rigidBody = Owner.GetComponent<RigidBody>();
         _ball = Locator.Game.FindGameObject("Ball");
         _ballRender = _ball.GetComponent<RenderComponent>();
+        RestartEvent.Handlers += this.RestartHandler;
     }
 
     public override void Update() {
@@ -38,6 +39,11 @@ public class PaddleScript : Component
 			return score; 
 		}
 	}	
+
+    void RestartHandler(object sender, RestartEvent e) {
+        score = 0;
+        Owner.Position.Y = 208;
+    }
 }
 
 

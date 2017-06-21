@@ -11,10 +11,12 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 
+public enum GameState { GameStart, Running, Paused, GameOver }
+
 public class Game {
     static private Random random = new Random(0); // seed for repeatability.
     private Window _window;
-
+    private GameState _gameState;
     private CollisionManager _collisionManager;
 
     [STAThread] // needed to use wpf Keyboard.isKeyPressed when single threaded !
@@ -29,15 +31,14 @@ public class Game {
     } 
 
 	public Game() {
-        
         _window = new Window( this );
         Locator.Game = this;
-
+        _gameState = GameState.GameStart;
         _collisionManager = new CollisionManager(this);
         Locator.CollisionManager = _collisionManager;
-    }
+        PauseEvent.Handlers += this.PauseHandler;
 
-    
+    }
 
     //GameObjects
     private GameObject _gameManager;
@@ -67,8 +68,6 @@ public class Game {
         #region Managers
         _gameManager = new GameObject("GameManager");
         _gameManager.AddComponent<GameManager>();
-
-        
         #endregion
 
         #region Ball 
@@ -87,7 +86,7 @@ public class Game {
         _leftPaddle.AddComponent<PaddleInput>();
         _leftPaddle.AddComponent<PaddleScript>();
 
-        _rightPaddle = new GameObject("RightPaddle", new Vec2(622, 328 /*622, 208*/));
+        _rightPaddle = new GameObject("RightPaddle", new Vec2(622, 208));
         _rightPaddle.AddComponent<RigidBody>();
         _rightPaddle.AddComponent<Collider>();
         _rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
@@ -147,13 +146,28 @@ public class Game {
         int counter = 0;
         //Console.WriteLine("Lag: " + lag);
         while (lag >= MS_PER_UPDATE) {
-            updateGameObjects();
-            _collisionManager.Update();
-
+            Time.UpdateUpdate(); //updates the timestep based on actual gamplay updates instead of on frame updates;
+            switch (_gameState) {
+                case GameState.GameStart:
+                    if (Input.Key.Enter(Keys.Enter)) {
+                        SetGameState(GameState.Running);
+                    }
+                    break;
+                case GameState.Running:
+                    updateGameObjects();
+                    _collisionManager.Update();
+                    break;
+                case GameState.Paused:
+                    updateGameObjects();
+                    break;
+                case GameState.GameOver:
+                    if (Input.Key.Enter(Keys.R)) SetGameState(GameState.GameStart);
+                    break;
+                default:
+                    break;
+            }
+            
             Locator.EventManager.DeliverEvents(); 
-
-           
-
             lag -= MS_PER_UPDATE;
             counter++;
         }
@@ -171,6 +185,10 @@ public class Game {
 			return random;
 		}
 	}
+
+    void PauseHandler(object sender, PauseEvent e) {
+        _gameState = e.state == PauseState.Paused ? GameState.Paused : GameState.Running;
+    }
 
     //Gets called at GameObject's construction time.
     public void AddToGameObjects(GameObject gameObject) {
@@ -198,6 +216,7 @@ public class Game {
 
     private void drawGameObjects(Graphics graphics, float timeIntoNextFrame) {
         //Console.WriteLine("Drawables: " + drawableList.Count);
+        if (_gameState != GameState.Running) timeIntoNextFrame = 0.0f;
         for (int i = drawableList.Count - 1; i >= 0; i--) {
 
             drawableList[i].Draw(graphics, timeIntoNextFrame);
@@ -219,5 +238,15 @@ public class Game {
             _startQueHead = (_startQueHead + 1) % MAX_STARTEVENTS;
         }
     }
+
+    public void SetGameState(GameState gameState) {
+        if (gameState == GameState.GameStart) {
+            Locator.EventManager.AddEvent(new RestartEvent());
+        }
+
+        _gameState = gameState;
+    }
+
+    
 }
 

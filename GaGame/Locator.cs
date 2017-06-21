@@ -17,5 +17,4 @@ static class Locator {
 
     public static Game Game { get; set; }
     public static CollisionManager CollisionManager { get; set; }
-    
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-enum PauseState { Paused, Unpaused }
+public enum PauseState { Paused, Unpaused }
 
 class PauseEvent : Event {
     public static EventHandler<PauseEvent> Handlers;
@@ -15,6 +15,6 @@ class PauseEvent : Event {
     }
 
     public override void Deliver() {
-        
+        Handlers?.Invoke(this, this);
     }
 }

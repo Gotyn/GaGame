@@ -53,6 +53,7 @@
     <Compile Include="Components\BaseComponents\Collider.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\PauseEvent.cs" />
+    <Compile Include="Events\RestartEvent.cs" />
     <Compile Include="Events\StartEvent.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="Managers\CollisionManager.cs" />

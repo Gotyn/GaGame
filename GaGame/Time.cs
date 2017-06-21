@@ -14,15 +14,18 @@ static public class Time
 	private static Stopwatch stopwatch = Stopwatch.StartNew(); // for timing 
 	
 	//private float lastTime = Time;
-	private static float now = 0.0f;
-	private static float step = 0.0f; // note: now it's a dynamic step size, you may want to have a fixxed timeStep !
-	
+	private static float frameNow = 0.0f;
+	private static float frameStep = 0.0f; // note: now it's a dynamic step size, you may want to have a fixxed timeStep !
+
+    private static float updateNow = 0.0f;
+    private static float updateStep = 0.0f; // note: time step based on actual updates, not framtime
+
 	static SortedSet<TimeoutEvent> timeouts = new SortedSet<TimeoutEvent>();
 	
 	static public void Update() {
-		float lastTime = now;
-		now = (float)stopwatch.ElapsedTicks / Stopwatch.Frequency; // convert to float
-		step = now - lastTime;
+		float lastTime = frameNow;
+		frameNow = (float)stopwatch.ElapsedTicks / Stopwatch.Frequency; // convert to float
+		frameStep = frameNow - lastTime;
 
 		// check for timeouts and deliver for all needed
 		while( timeouts.Count > 0 && timeouts.Min.Raise() ) { // get all timeouts
@@ -30,9 +33,15 @@ static public class Time
 		}
 		//Console.WriteLine( "Time "+Time.Step );
 	}
+
+    static public void UpdateUpdate() {
+        float lastTime = updateNow;
+        updateNow = (float)stopwatch.ElapsedTicks / Stopwatch.Frequency;
+        updateStep = updateNow - lastTime;
+    }
 	
 	static public float Now { // in secs
-		get { return now; } // consistent time in all the game;
+		get { return frameNow; } // consistent time in all the game;
 	}
 
 	static public float Real { // in secs
@@ -40,8 +49,12 @@ static public class Time
 	}
 
 	static public float Step { // in secs
-		get { return step; } // consistent timeStep for all the game
+		get { return frameStep; } // consistent timeStep for all the game
 	}		
+
+    static public float UpdateStep { //in secs
+        get { return updateStep; } // consistent timestep for handling keys when game is running on a fast pc
+    }
 	
 	static public void Timeout( string pName, float pInterval, EventHandler<TimeoutEvent> pHandler ) 
 	{

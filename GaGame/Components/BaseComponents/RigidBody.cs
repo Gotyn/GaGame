@@ -16,7 +16,7 @@ public class RigidBody : Component {
 
     public override void Update() {
         Debug.Assert(Owner.Position != null);
-
+        if (_paused) return;
         _previousPosition = new Vec2(Owner.Position.X, Owner.Position.Y);
         Owner.Position.Add(Velocity);
     }
@@ -26,6 +26,7 @@ public class RigidBody : Component {
     }
 
     private void pauseHandler(object sender, PauseEvent e) {
+        Console.WriteLine("Pause Triggered");
         _paused = e.state == PauseState.Paused ? true : false;
     }
 

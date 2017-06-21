@@ -17,7 +17,7 @@ public class BallScript : Component
 
     public override void Start() {
         Owner.Position = new Vec2(312, 232); // center of form
-
+        RestartEvent.Handlers += this.RestartHandler;
         _rigidBody = Owner.GetComponent<RigidBody>();
         Debug.Assert(_rigidBody != null);
 
@@ -50,15 +50,18 @@ public class BallScript : Component
     public void Reset() {
         Owner.Position.X = 320 - 8;
         Owner.Position.Y = 240 - 8;
-        //velocity.X = 0.5f;
-        Owner.GetComponent<RigidBody>().Velocity = new Vec2(Speed.X, (float)(Game.Random.NextDouble() - 0.5) * 2.0f * Speed.Y);
+        _rigidBody.Velocity = new Vec2(0, 0);
         Time.Timeout("Reset", 1.0f, Restart);   // restart after 1 sec.
     }
 
 	public void Restart(  Object sender,  Time.TimeoutEvent timeout ) 
 	{
-		Console.WriteLine("Restart");
+        _rigidBody.Velocity = new Vec2(Speed.X * (Game.Random.Next(0,2) == 0 ? -1 : 1), (float)(Game.Random.NextDouble() - 0.5) * 2.0f * Speed.Y);
+        Console.WriteLine("Restart");
 	}
 
+    void RestartHandler(object sender, RestartEvent e) {
+        Reset();
+    }
 }
 
