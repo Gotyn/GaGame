@@ -21,7 +21,7 @@ public class TextComponent : RenderComponent
         _text = "0";
     }
 
-    public override void Draw(Graphics graphics) {
+    public override void Draw(Graphics graphics, float timeIntoNextFrame = 0) {
         int digits = 2;
         string score = "000" + _paddle.GetComponent<PaddleScript>().Score.ToString();
         for (int d = 0; d < digits; d++) { // 3 digits left to right

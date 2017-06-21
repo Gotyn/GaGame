@@ -32,33 +32,43 @@ public class Game {
 
     private CollisionManager _collisionManager;
     
+    //GameObjects
     private GameObject ball;
     private GameObject leftPaddle, rightPaddle;
     private GameObject leftScore, rightScore;
     private GameObject booster1, booster2;
 
-    //GameObject dummy;
-
+    //Lists
     private List<GameObject> gameObjectList = new List<GameObject>();
     private List<RenderComponent> drawableList = new List<RenderComponent>();
 
+    //EventQue (StartQue)
     static int MAX_STARTEVENTS = 100;
     private int _startQueHead = 0;
     private int _startQueTail = 0;
     Component[] componentStartQue = new Component[MAX_STARTEVENTS];
+
+    //GameLoop
+    static double MS_PER_UPDATE = 0.016;  //Time 
+    double currentUpdateTime;   //Time @ update start
+    double previousUpdateTime;  //Time @ previous update start
     
-
+    double lag = 0.0;
+    
     private void Build() {
+        #region CollisionManager
         _collisionManager = new CollisionManager(this);
+        #endregion
 
-        //Ball
+        #region Ball 
         ball = new GameObject(this, "Ball");
         ball.AddComponent<RigidBody>();
         ball.AddComponent<Collider>();
         ball.AddComponent<RenderComponent>().Image = Image.FromFile("ball.png");
         ball.AddComponent<BallScript>();
+        #endregion
 
-        //LeftPaddle
+        #region Paddles
         leftPaddle = new GameObject(this, "LeftPaddle", new Vec2(10, 208));
         leftPaddle.AddComponent<RigidBody>();
         leftPaddle.AddComponent<Collider>();
@@ -66,18 +76,15 @@ public class Game {
         leftPaddle.AddComponent<PaddleInput>();
         leftPaddle.AddComponent<PaddleScript>();
 
-        ////dummypaddleforcollisioncheck
-        //dummy = new GameObject(this, "Dummy", new Vec2(3, 100));
-        //dummy.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
-
-        //RightPaddle
         rightPaddle = new GameObject(this, "RightPaddle", new Vec2(622, 328 /*622, 208*/));
         rightPaddle.AddComponent<RigidBody>();
         rightPaddle.AddComponent<Collider>();
         rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
         rightPaddle.AddComponent<PaddleInput>();
         rightPaddle.AddComponent<PaddleScript>();
+        #endregion
 
+        #region Scores
         //LeftScore
         leftScore = new GameObject(this, "LeftScore", new Vec2(320 - 20 - 66, 10));
         leftScore.AddComponent<TextComponent>().Paddle = leftPaddle;
@@ -87,17 +94,19 @@ public class Game {
         rightScore = new GameObject(this, "RightScore", new Vec2(320 + 20, 10));
         rightScore.AddComponent<TextComponent>().Paddle = rightPaddle;
         rightScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
+        #endregion
 
+        #region Boosters
         //Booster1
         booster1 = new GameObject(this, "Booster1", new Vec2(304, 96));
         booster1.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
         booster1.AddComponent<BoosterScript>();
-
+        
         //Booster2
         booster2 = new GameObject(this, "Booster2", new Vec2(304, 384));
         booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
         booster2.AddComponent<BoosterScript>();
-        //printGameObjectList();
+        #endregion
 
         HandleEvents();
     }
@@ -106,49 +115,48 @@ public class Game {
 		Time.Timeout( "Reset", 1.0f, ball.GetComponent<BallScript>().Restart );	
 		
 		bool running = true;
-		while( running ) { // gameloop
-			Application.DoEvents(); // empty forms event queue
 
-			// can close
-			if( Input.Key.Enter( Keys.Escape ) ) {
-				running = false;
-			}
-			
-			_window.Refresh(); // use refresh for a frame based update, async
-		}
+        while (running) { // gameloop
+            Application.DoEvents(); // empty forms event queue
+            // can close
+            if (Input.Key.Enter(Keys.Escape)) {
+                running = false;
+            }
+            _window.Refresh(); // use refresh for a frame based update, async
+        }
 	}
 
 	public void Update(Graphics graphics) {
 		Time.Update();
 		FrameCounter.Update();
 
-        // steps to do
-        // input
-        // apply velocity so move		
-        // check collisions and apply reponse and rules		
-        // render
+        currentUpdateTime = Time.Now;
+        lag += currentUpdateTime - previousUpdateTime;
+        previousUpdateTime = currentUpdateTime;
+        int counter = 0;
+        //Console.WriteLine("Lag: " + lag);
+        while (lag >= MS_PER_UPDATE) {
+            updateGameObjects();
+            _collisionManager.Update();
+            HandleEvents();
 
+            //ScoreBounds
+            if (ball.Position.X < 0) {
+                rightPaddle.GetComponent<PaddleScript>().IncScore();
+                ball.GetComponent<BallScript>().Reset();
+            }
+            if (ball.Position.X > 640 - 16) { // note: bad literals detected
+                leftPaddle.GetComponent<PaddleScript>().IncScore();
+                ball.GetComponent<BallScript>().Reset();
+            }
 
-        UpdateGameObjects();
-        _collisionManager.Update();
-        //_collisionManager.CheckCollision(ball, rightPaddle);
-        //_collisionManager.CheckCollision(ball, leftPaddle);
-        HandleEvents();
-        DrawDrawables(graphics);
-
-        if (ball.Position.X < 0) {
-            rightPaddle.GetComponent<PaddleScript>().IncScore();
-            ball.GetComponent<BallScript>().Reset();
+            lag -= MS_PER_UPDATE;
+            counter++;
         }
-        if (ball.Position.X > 640 - 16) { // note: bad literals detected
-            leftPaddle.GetComponent<PaddleScript>().IncScore();
-            ball.GetComponent<BallScript>().Reset();
-        }
-
-        Thread.Sleep( 16 ); // roughly 60 fps
-		
-		//Console.WriteLine("Updating");
-	}
+        //Console.WriteLine("Updates this frame: " + counter);
+        
+        drawGameObjects(graphics, (float)(lag / MS_PER_UPDATE));
+    }
 	
 	public void Close() {
 		_window.Close();
@@ -177,18 +185,18 @@ public class Game {
         }
     }
 
-    private void UpdateGameObjects() {
+    private void updateGameObjects() {
         for (int i = gameObjectList.Count - 1; i >= 0; i--) {
             gameObjectList[i].Update();
             //Console.WriteLine("{0} \t\t Got Updated!", gameObjectList[i].Name);
         }
     }
 
-    private void DrawDrawables(Graphics graphics) {
+    private void drawGameObjects(Graphics graphics, float timeIntoNextFrame) {
         //Console.WriteLine("Drawables: " + drawableList.Count);
         for (int i = drawableList.Count - 1; i >= 0; i--) {
 
-            drawableList[i].Draw(graphics);
+            drawableList[i].Draw(graphics, timeIntoNextFrame);
         }
     }
 

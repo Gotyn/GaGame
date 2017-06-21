@@ -22,10 +22,17 @@ public class RenderComponent : Component {
         Image = image;
     }
 
-    virtual public void Draw(Graphics graphics) {
+    virtual public void Draw(Graphics graphics, float timeIntoNextFrame) {
         Debug.Assert(graphics != null);
         Debug.Assert(Image != null);
-        graphics.DrawImage(_image, Owner.Position.X, Owner.Position.Y);
+
+        RigidBody rigidBody = Owner.GetComponent<RigidBody>();
+        if (rigidBody != null) {
+            graphics.DrawImage(_image, Owner.Position.X + rigidBody.Velocity.X * timeIntoNextFrame, Owner.Position.Y + rigidBody.Velocity.Y * timeIntoNextFrame);
+        } 
+        else {
+            graphics.DrawImage(_image, Owner.Position.X, Owner.Position.Y);
+        }
     }
 
     public Vec2 Size {
