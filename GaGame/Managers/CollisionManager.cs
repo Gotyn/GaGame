@@ -4,15 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class CollisionEvent {
-    public GameObject A_Collidee, B_Collidee;
-
-    public CollisionEvent(GameObject A, GameObject B) {
-        A_Collidee = A;
-        B_Collidee = B;
-    }
-}
-
 class CollisionManager {
     private Game _game;
 
