@@ -14,7 +14,7 @@ public class BoosterScript : Component
 	public BallScript ball;
 	
     public override void Start() {
-        ball = Owner.Game.FindGameObject("Ball").GetComponent<BallScript>();
+        ball = Locator.Game.FindGameObject("Ball").GetComponent<BallScript>();
     }
 
     // Event handlers

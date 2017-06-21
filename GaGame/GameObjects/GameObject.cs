@@ -8,23 +8,21 @@ using System.Drawing;
 
 public class GameObject : Object {
     private string name = "New GameObject";
-    private Game _game;
     private Vec2 _position = null;
     private Vec2 _size = null;
 
     public List<Component> componentList = new List<Component>();
 
 
-    public GameObject(Game pGame) {
-        _game = pGame;
-        _game.AddToGameObjects(this);
+    public GameObject() {
+        Locator.Game.AddToGameObjects(this);
     }
 
-    public GameObject(Game pGame, string pName) : this (pGame) {
+    public GameObject(string pName) : this () {
         Name = pName;
     }
 
-    public GameObject(Game pGame, string pName, Vec2 pPosition) : this(pGame, pName) {
+    public GameObject(string pName, Vec2 pPosition) : this(pName) {
         Position = pPosition;
     }
 
@@ -35,7 +33,6 @@ public class GameObject : Object {
     }
 
     public string Name { get => name; set => name = value; }
-    public Game Game { get => _game; }
     public Vec2 Position { get => _position; set => _position = value; }
     public Vec2 Size { get => _size; set => _size = value; }
 

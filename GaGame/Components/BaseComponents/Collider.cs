@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 class Collider : Component {
     public override void Start() {
-        Owner.Game.RegisterForCollisionChecks(Owner);
+        Locator.CollisionManager.AddCollidingObject(Owner);
     }
 }

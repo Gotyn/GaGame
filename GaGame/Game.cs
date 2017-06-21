@@ -15,6 +15,8 @@ public class Game {
     static private Random random = new Random(0); // seed for repeatability.
     private Window _window;
 
+    private CollisionManager _collisionManager;
+
     [STAThread] // needed to use wpf Keyboard.isKeyPressed when single threaded !
     static public void Main() {
         Console.WriteLine("Starting Game, close with Escape");
@@ -26,17 +28,23 @@ public class Game {
         Console.WriteLine("Closed window");
     } 
 
-	public Game() { 
-		_window = new Window( this );
-	}
+	public Game() {
+        
+        _window = new Window( this );
+        Locator.Game = this;
 
-    private CollisionManager _collisionManager;
+        _collisionManager = new CollisionManager(this);
+        Locator.CollisionManager = _collisionManager;
+    }
+
     
+
     //GameObjects
-    private GameObject ball;
-    private GameObject leftPaddle, rightPaddle;
-    private GameObject leftScore, rightScore;
-    private GameObject booster1, booster2;
+    private GameObject _gameManager;
+    private GameObject _ball;
+    private GameObject _leftPaddle, _rightPaddle;
+    private GameObject _leftScore, _rightScore;
+    private GameObject _booster1, _booster2;
 
     //Lists
     private List<GameObject> gameObjectList = new List<GameObject>();
@@ -56,63 +64,66 @@ public class Game {
     double lag = 0.0;
     
     private void Build() {
-        #region CollisionManager
-        _collisionManager = new CollisionManager(this);
+        #region Managers
+        _gameManager = new GameObject("GameManager");
+        _gameManager.AddComponent<GameManager>();
+
+        
         #endregion
 
         #region Ball 
-        ball = new GameObject(this, "Ball");
-        ball.AddComponent<RigidBody>();
-        ball.AddComponent<Collider>();
-        ball.AddComponent<RenderComponent>().Image = Image.FromFile("ball.png");
-        ball.AddComponent<BallScript>();
+        _ball = new GameObject("Ball");
+        _ball.AddComponent<RigidBody>();
+        _ball.AddComponent<Collider>();
+        _ball.AddComponent<RenderComponent>().Image = Image.FromFile("ball.png");
+        _ball.AddComponent<BallScript>();
         #endregion
 
         #region Paddles
-        leftPaddle = new GameObject(this, "LeftPaddle", new Vec2(10, 208));
-        leftPaddle.AddComponent<RigidBody>();
-        leftPaddle.AddComponent<Collider>();
-        leftPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
-        leftPaddle.AddComponent<PaddleInput>();
-        leftPaddle.AddComponent<PaddleScript>();
+        _leftPaddle = new GameObject("LeftPaddle", new Vec2(10, 208));
+        _leftPaddle.AddComponent<RigidBody>();
+        _leftPaddle.AddComponent<Collider>();
+        _leftPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
+        _leftPaddle.AddComponent<PaddleInput>();
+        _leftPaddle.AddComponent<PaddleScript>();
 
-        rightPaddle = new GameObject(this, "RightPaddle", new Vec2(622, 328 /*622, 208*/));
-        rightPaddle.AddComponent<RigidBody>();
-        rightPaddle.AddComponent<Collider>();
-        rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
-        rightPaddle.AddComponent<PaddleInput>();
-        rightPaddle.AddComponent<PaddleScript>();
+        _rightPaddle = new GameObject("RightPaddle", new Vec2(622, 328 /*622, 208*/));
+        _rightPaddle.AddComponent<RigidBody>();
+        _rightPaddle.AddComponent<Collider>();
+        _rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
+        _rightPaddle.AddComponent<PaddleInput>();
+        _rightPaddle.AddComponent<PaddleScript>();
         #endregion
 
         #region Scores
         //LeftScore
-        leftScore = new GameObject(this, "LeftScore", new Vec2(320 - 20 - 66, 10));
-        leftScore.AddComponent<TextComponent>().Paddle = leftPaddle;
-        leftScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
+        _leftScore = new GameObject("LeftScore", new Vec2(320 - 20 - 66, 10));
+        _leftScore.AddComponent<TextComponent>().Paddle = _leftPaddle;
+        _leftScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
 
         //RightScore
-        rightScore = new GameObject(this, "RightScore", new Vec2(320 + 20, 10));
-        rightScore.AddComponent<TextComponent>().Paddle = rightPaddle;
-        rightScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
+        _rightScore = new GameObject("RightScore", new Vec2(320 + 20, 10));
+        _rightScore.AddComponent<TextComponent>().Paddle = _rightPaddle;
+        _rightScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
         #endregion
 
         #region Boosters
         //Booster1
-        booster1 = new GameObject(this, "Booster1", new Vec2(304, 96));
-        booster1.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
-        booster1.AddComponent<BoosterScript>();
+        _booster1 = new GameObject("Booster1", new Vec2(304, 96));
+        _booster1.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
+        _booster1.AddComponent<BoosterScript>();
         
         //Booster2
-        booster2 = new GameObject(this, "Booster2", new Vec2(304, 384));
-        booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
-        booster2.AddComponent<BoosterScript>();
+        _booster2 = new GameObject("Booster2", new Vec2(304, 384));
+        _booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
+        _booster2.AddComponent<BoosterScript>();
         #endregion
 
         Locator.EventManager.DeliverEvents();
     }
 
     public void Run() {
-		Time.Timeout( "Reset", 1.0f, ball.GetComponent<BallScript>().Restart );	
+		Time.Timeout( "Reset", 1.0f, _ball.GetComponent<BallScript>().Restart );	
 		
 		bool running = true;
 
@@ -141,15 +152,7 @@ public class Game {
 
             Locator.EventManager.DeliverEvents(); 
 
-            //ScoreBounds
-            if (ball.Position.X < 0) {
-                rightPaddle.GetComponent<PaddleScript>().IncScore();
-                ball.GetComponent<BallScript>().Reset();
-            }
-            if (ball.Position.X > 640 - 16) { // note: bad literals detected
-                leftPaddle.GetComponent<PaddleScript>().IncScore();
-                ball.GetComponent<BallScript>().Reset();
-            }
+           
 
             lag -= MS_PER_UPDATE;
             counter++;
@@ -203,10 +206,6 @@ public class Game {
 
     public GameObject FindGameObject(string pName) {
         return gameObjectList.Find(go => go.Name == pName);
-    }
-
-    public void RegisterForCollisionChecks(GameObject gameObject) {
-        _collisionManager.AddCollidingObject(gameObject);
     }
 
     public void AddComponentToStartQue(Component component) {

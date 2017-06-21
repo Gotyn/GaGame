@@ -52,6 +52,7 @@
     <Compile Include="Events\CollisionEvent.cs" />
     <Compile Include="Components\BaseComponents\Collider.cs" />
     <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\PauseEvent.cs" />
     <Compile Include="Events\StartEvent.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Components\ScriptComponents\PaddleScript.cs" />
     <Compile Include="Components\ScriptComponents\TextComponent.cs" />
     <Compile Include="Managers\EventManager.cs" />
+    <Compile Include="Managers\GameManager.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="Window.cs">

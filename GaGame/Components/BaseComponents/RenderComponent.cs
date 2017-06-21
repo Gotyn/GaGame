@@ -14,7 +14,7 @@ public class RenderComponent : Component {
 
     public override void Start() {
         Owner.Size = Size;
-        Owner.Game.AddToDrawables(this);
+        Locator.Game.AddToDrawables(this);
     }
 
     public RenderComponent() {}

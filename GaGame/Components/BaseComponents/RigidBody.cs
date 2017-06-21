@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 public class RigidBody : Component {
+    private bool _paused = false;
     private Vec2 _velocity = new Vec2();
     private Vec2 _previousPosition = new Vec2();
+
+    public override void Start() {
+        PauseEvent.Handlers += this.pauseHandler;
+    }
 
     public override void Update() {
         Debug.Assert(Owner.Position != null);
@@ -18,6 +23,10 @@ public class RigidBody : Component {
     
     public void AddForce(Vec2 force) {
         Velocity += force;
+    }
+
+    private void pauseHandler(object sender, PauseEvent e) {
+        _paused = e.state == PauseState.Paused ? true : false;
     }
 
     public Vec2 Velocity { get => _velocity; set => _velocity = value; }

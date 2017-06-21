@@ -19,7 +19,7 @@ public class PaddleScript : Component
     public override void Start() {
         score = 0;
         _rigidBody = Owner.GetComponent<RigidBody>();
-        _ball = Owner.Game.FindGameObject("Ball");
+        _ball = Locator.Game.FindGameObject("Ball");
         _ballRender = _ball.GetComponent<RenderComponent>();
     }
 
