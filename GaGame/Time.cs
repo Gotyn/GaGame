@@ -34,7 +34,7 @@ static public class Time
 		//Console.WriteLine( "Time "+Time.Step );
 	}
 
-    static public void UpdateUpdate() {
+    static public void UpdateBasedOnUpdate() {
         float lastTime = updateNow;
         updateNow = (float)stopwatch.ElapsedTicks / Stopwatch.Frequency;
         updateStep = updateNow - lastTime;

@@ -146,7 +146,7 @@ public class Game {
         int counter = 0;
         //Console.WriteLine("Lag: " + lag);
         while (lag >= MS_PER_UPDATE) {
-            Time.UpdateUpdate(); //updates the timestep based on actual gamplay updates instead of on frame updates;
+            Time.UpdateBasedOnUpdate(); //updates the timestep based on actual gamplay updates instead of on frame updates;
             switch (_gameState) {
                 case GameState.GameStart:
                     if (Input.Key.Enter(Keys.Enter)) {
