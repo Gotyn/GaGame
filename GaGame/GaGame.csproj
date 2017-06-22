@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
+    <None Include="Overview UML.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\BaseComponents\AutoPaddleInput.cs" />
+    <Compile Include="Components\ScriptComponents\AutoPaddleScript.cs" />
     <Compile Include="Events\CollisionEvent.cs" />
     <Compile Include="Components\BaseComponents\Collider.cs" />
     <Compile Include="Events\Event.cs" />
