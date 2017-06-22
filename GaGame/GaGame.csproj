@@ -50,6 +50,7 @@
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\BaseComponents\AutoPaddleInput.cs" />
     <Compile Include="Events\CollisionEvent.cs" />
     <Compile Include="Components\BaseComponents\Collider.cs" />
     <Compile Include="Events\Event.cs" />
@@ -59,7 +60,6 @@
     <Compile Include="Locator.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
     <Compile Include="Components\BaseComponents\Component.cs" />
-    <Compile Include="Components\BaseComponents\PaddleInput.cs" />
     <Compile Include="Components\BaseComponents\RenderComponent.cs" />
     <Compile Include="Components\BaseComponents\RigidBody.cs" />
     <Compile Include="Components\ScriptComponents\BallScript.cs" />

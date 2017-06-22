@@ -8,7 +8,10 @@ class GameManager : Component {
     public override void Start() {
         _ball = Locator.Game.FindGameObject("Ball");
         _leftPaddle = Locator.Game.FindGameObject("LeftPaddle").GetComponent<PaddleScript>();
+        if (_leftPaddle == null) _leftPaddle = Locator.Game.FindGameObject("LeftPaddle").GetComponent<AutoPaddleScript>();
+
         _rightPaddle = Locator.Game.FindGameObject("RightPaddle").GetComponent<PaddleScript>();
+        if (_rightPaddle == null) _rightPaddle = Locator.Game.FindGameObject("RightPaddle").GetComponent<AutoPaddleScript>();
 
         //Subscribe to events
         PauseEvent.Handlers += this.PauseHandler;

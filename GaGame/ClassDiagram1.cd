@@ -1,189 +1,189 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Collider" Collapsed="true">
-    <Position X="2.5" Y="3.75" Width="1.5" />
+    <Position X="0.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Components\BaseComponents\Collider.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Component" Collapsed="true">
-    <Position X="8.75" Y="2.5" Width="1.5" />
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAgACAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Components\BaseComponents\Component.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PaddleInput" Collapsed="true">
-    <Position X="7.75" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAQAAAAAACAAAAAAAAAAAAABAAAAAAAABAAAAAAAAAA=</HashCode>
-      <FileName>Components\BaseComponents\PaddleInput.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="RenderComponent" Collapsed="true">
-    <Position X="9.5" Y="3.75" Width="1.5" />
+    <Position X="7.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAgoAAAAAAAAAAAAAAQBAQAAAAAAAIAAA=</HashCode>
       <FileName>Components\BaseComponents\RenderComponent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RigidBody" Collapsed="true">
-    <Position X="11.25" Y="3.75" Width="1.5" />
+    <Position X="9.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAACIICAAAAAAAAQAAAAAAAgAAAABAAAAEAAE=</HashCode>
       <FileName>Components\BaseComponents\RigidBody.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="AutoPaddleScript" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ScriptComponents\AutoPaddleScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="BallScript" Collapsed="true">
-    <Position X="13" Y="3.75" Width="1.5" />
+    <Position X="12" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>MAAAAAAAACAABAAAIACAAAABQAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Components\ScriptComponents\BallScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoosterScript" Collapsed="true">
-    <Position X="4.25" Y="3.75" Width="1.5" />
+    <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAACAAAAAAIAAAAAAAAAAAAAAAIAAAIAAAAAA=</HashCode>
       <FileName>Components\ScriptComponents\BoosterScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PaddleScript" Collapsed="true">
-    <Position X="6" Y="3.75" Width="1.5" />
+    <Position X="5.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAACAAAggAAACAAAAACAAAAAAAIAAEAAAAAAA=</HashCode>
+      <HashCode>AAQAAAIAACAABggAAACEAAABAAAAAAABJAAEAAAAQAI=</HashCode>
       <FileName>Components\ScriptComponents\PaddleScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextComponent" Collapsed="true">
-    <Position X="9.5" Y="4.75" Width="1.5" />
+    <Position X="7.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAASAAAgAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAASAAAgAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
       <FileName>Components\ScriptComponents\TextComponent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CollisionEvent" Collapsed="true">
-    <Position X="8.5" Y="6" Width="1.5" />
+    <Position X="7.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Events\CollisionEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Event" Collapsed="true">
-    <Position X="6" Y="4.75" Width="1.5" />
+    <Position X="3.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\Event.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PauseEvent" Collapsed="true">
-    <Position X="3.25" Y="6" Width="1.5" />
+    <Position X="0.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Events\PauseEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RestartEvent" Collapsed="true">
-    <Position X="5" Y="6" Width="1.5" />
+    <Position X="2.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\RestartEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="StartEvent" Collapsed="true">
-    <Position X="6.75" Y="6" Width="1.5" />
+    <Position X="5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Events\StartEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FrameCounter" Collapsed="true">
-    <Position X="13" Y="6" Width="1.5" />
+    <Position X="20.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FrameCounter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game" Collapsed="true">
-    <Position X="18.25" Y="5" Width="1.5" />
+    <Position X="22" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQCMBAAAhAAAAIACAAAAAABSAAAhAgAYEAABAHiAAM=</HashCode>
+      <HashCode>AAQCMBAAAhAAAAIACABAAAABSAAIhAgAaEAABAHiAAM=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameObject" Collapsed="true">
-    <Position X="16.5" Y="5" Width="1.5" />
+    <Position X="16.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAIgAAgAAAABAQgAAAEAAAEIAAggAYAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAIgAAgAEAABAQgAAAEAAAEIAAggAIAAAA=</HashCode>
       <FileName>GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Input" Collapsed="true">
-    <Position X="14.75" Y="6" Width="1.5" />
+    <Position X="18.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Input.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Locator" Collapsed="true">
-    <Position X="16.5" Y="6" Width="1.5" />
+    <Position X="20.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACCAAA=</HashCode>
       <FileName>Locator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CollisionManager" Collapsed="true">
-    <Position X="13" Y="5" Width="1.5" />
+    <Position X="16.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAQAQQ=</HashCode>
       <FileName>Managers\CollisionManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EventManager" Collapsed="true">
-    <Position X="14.75" Y="5" Width="1.5" />
+    <Position X="18.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAACAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Managers\EventManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameManager" Collapsed="true">
-    <Position X="14.75" Y="3.75" Width="1.5" />
+    <Position X="14.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAQAAAAAACAAAAAACAAAAAAACAAIAgAACAAAAAAAAAA=</HashCode>
       <FileName>Managers\GameManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Time" Collapsed="true">
-    <Position X="18.25" Y="6" Width="1.5" />
+    <Position X="22" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQBAAAAAAgAAAAAICAAACAAICAAAIIAYAAACAAAAAA=</HashCode>
       <FileName>Time.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vec2" Collapsed="true">
-    <Position X="16.5" Y="4" Width="1.5" />
+    <Position X="16.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAEYAUAAAAACAAAAABAAABgAAAAYAQ=</HashCode>
       <FileName>Vec2.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Window" Collapsed="true">
-    <Position X="18.25" Y="4" Width="1.5" />
+    <Position X="18.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Window.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="PauseState" Collapsed="true">
-    <Position X="18.25" Y="3.25" Width="1.5" />
+    <Position X="18.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\PauseEvent.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="GameState" Collapsed="true">
-    <Position X="16.5" Y="3.25" Width="1.5" />
+    <Position X="16.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAggAAAAAACAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Game.cs</FileName>

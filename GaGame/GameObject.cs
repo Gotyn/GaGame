@@ -49,17 +49,21 @@ public class GameObject : Object {
         _componentList.Remove(component);
     }
 
-    public void RemoveComponentOfType(Type type) {
+    public void RemoveComponentsOfType<T>() where T : Component {
         for (int i = _componentList.Count - 1; i >= 0; i--) {
-            if (_componentList[i].GetType() == type)
+            if (_componentList[i].GetType() == typeof(T)) {
+                if (typeof(T) == typeof(RenderComponent)) {
+                    Locator.Game.RemoveFromDrawables((RenderComponent)_componentList[i]);
+                }
                 RemoveComponent(_componentList[i]);
+            }
         }
     }
 
-    public T GetComponent<T>() where T:Component {
+    public T GetComponent<T>() where T : Component {
         foreach (Component component in _componentList) {
             if (component.GetType() == typeof(T))
-                return (T) component;
+                return (T)component;
         }
         return null;
     }
