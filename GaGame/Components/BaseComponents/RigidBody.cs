@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 public class RigidBody : Component {
     private bool _paused = false;
@@ -26,8 +21,11 @@ public class RigidBody : Component {
     }
 
     private void pauseHandler(object sender, PauseEvent e) {
-        Console.WriteLine("Pause Triggered");
         _paused = e.state == PauseState.Paused ? true : false;
+    }
+
+    public void UndoMove() {
+        Owner.Position = _previousPosition;
     }
 
     public Vec2 Velocity { get => _velocity; set => _velocity = value; }

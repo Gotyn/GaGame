@@ -1,23 +1,33 @@
-﻿/*
- * Saxion, Game Architecture
- * User: Eelco Jannink
- * Date: 19-5-2016
- * Time: 16:55
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 
 public enum GameState { GameStart, Running, Paused, GameOver }
 
 public class Game {
-    static private Random random = new Random(0); // seed for repeatability.
+    static private Random _random = new Random(0); // seed for repeatability.
     private Window _window;
     private GameState _gameState;
     private CollisionManager _collisionManager;
+
+    static public Random Random { get => _random; }
+
+    private GameObject _ball;
+    private RenderComponent _infoSpriteRenderer;
+
+    #region Lists Variables
+    private List<GameObject> gameObjectList = new List<GameObject>();
+    private List<RenderComponent> drawableList = new List<RenderComponent>();
+    #endregion
+
+    #region GameLoop Variables
+    static double MS_PER_UPDATE = 0.016;  //Time 
+    double currentUpdateTime;   //Time @ update start
+    double previousUpdateTime;  //Time @ previous update start
+    double lag = 0.0;
+    #endregion
 
     [STAThread] // needed to use wpf Keyboard.isKeyPressed when single threaded !
     static public void Main() {
@@ -37,38 +47,31 @@ public class Game {
         _collisionManager = new CollisionManager(this);
         Locator.CollisionManager = _collisionManager;
         PauseEvent.Handlers += this.PauseHandler;
-
     }
 
-    //GameObjects
-    private GameObject _gameManager;
-    private GameObject _ball;
-    private GameObject _leftPaddle, _rightPaddle;
-    private GameObject _leftScore, _rightScore;
-    private GameObject _booster1, _booster2;
-
-    //Lists
-    private List<GameObject> gameObjectList = new List<GameObject>();
-    private List<RenderComponent> drawableList = new List<RenderComponent>();
-
-    //EventQue (StartQue)
-    static int MAX_STARTEVENTS = 100;
-    private int _startQueHead = 0;
-    private int _startQueTail = 0;
-    Component[] componentStartQue = new Component[MAX_STARTEVENTS];
-
-    //GameLoop
-    static double MS_PER_UPDATE = 0.016;  //Time 
-    double currentUpdateTime;   //Time @ update start
-    double previousUpdateTime;  //Time @ previous update start
-    
-    double lag = 0.0;
-    
     private void Build() {
         #region Managers
-        _gameManager = new GameObject("GameManager");
+        GameObject _gameManager = new GameObject("GameManager");
         _gameManager.AddComponent<GameManager>();
         #endregion
+
+        #region Bounds
+        GameObject _upperBound = new GameObject("UpperBound", new Vec2(0,-10));
+        _upperBound.AddComponent<RenderComponent>().Image = Image.FromFile("width.png");
+        _upperBound.AddComponent<Collider>();
+
+        GameObject _lowerBound = new GameObject("LowerBound", new Vec2(0, 480));
+        _lowerBound.AddComponent<RenderComponent>().Image = Image.FromFile("width.png");
+        _lowerBound.AddComponent<Collider>();
+
+        GameObject _leftBound = new GameObject("LeftBound", new Vec2(-10, 0));
+        _leftBound.AddComponent<RenderComponent>().Image = Image.FromFile("height.png");
+        _leftBound.AddComponent<Collider>();
+
+        GameObject _rightBound = new GameObject("RightBound", new Vec2(640, 0));
+        _rightBound.AddComponent<RenderComponent>().Image = Image.FromFile("height.png");
+        _rightBound.AddComponent<Collider>();
+        #endregion 
 
         #region Ball 
         _ball = new GameObject("Ball");
@@ -79,14 +82,14 @@ public class Game {
         #endregion
 
         #region Paddles
-        _leftPaddle = new GameObject("LeftPaddle", new Vec2(10, 208));
+        GameObject _leftPaddle = new GameObject("LeftPaddle", new Vec2(10, 208));
         _leftPaddle.AddComponent<RigidBody>();
         _leftPaddle.AddComponent<Collider>();
         _leftPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
         _leftPaddle.AddComponent<PaddleInput>();
         _leftPaddle.AddComponent<PaddleScript>();
 
-        _rightPaddle = new GameObject("RightPaddle", new Vec2(622, 208));
+        GameObject _rightPaddle = new GameObject("RightPaddle", new Vec2(622, 208));
         _rightPaddle.AddComponent<RigidBody>();
         _rightPaddle.AddComponent<Collider>();
         _rightPaddle.AddComponent<RenderComponent>().Image = Image.FromFile("paddle.png");
@@ -95,27 +98,31 @@ public class Game {
         #endregion
 
         #region Scores
-        //LeftScore
-        _leftScore = new GameObject("LeftScore", new Vec2(320 - 20 - 66, 10));
+        GameObject _leftScore = new GameObject("LeftScore", new Vec2(320 - 20 - 66, 10));
         _leftScore.AddComponent<TextComponent>().Paddle = _leftPaddle;
         _leftScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
 
-        //RightScore
-        _rightScore = new GameObject("RightScore", new Vec2(320 + 20, 10));
+        GameObject _rightScore = new GameObject("RightScore", new Vec2(320 + 20, 10));
         _rightScore.AddComponent<TextComponent>().Paddle = _rightPaddle;
         _rightScore.GetComponent<TextComponent>().Image = Image.FromFile("digits.png");
         #endregion
 
         #region Boosters
-        //Booster1
-        _booster1 = new GameObject("Booster1", new Vec2(304, 96));
+        GameObject _booster1 = new GameObject("Booster1", new Vec2(304, 96));
         _booster1.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
+        _booster1.AddComponent<Collider>();
         _booster1.AddComponent<BoosterScript>();
-        
-        //Booster2
-        _booster2 = new GameObject("Booster2", new Vec2(304, 384));
+
+        GameObject _booster2 = new GameObject("Booster2", new Vec2(304, 384));
         _booster2.AddComponent<RenderComponent>().Image = Image.FromFile("booster.png");
+        _booster2.AddComponent<Collider>();
         _booster2.AddComponent<BoosterScript>();
+        #endregion
+
+        #region Info Sprite
+        GameObject _infoSprite = new GameObject("GameOverSprite", new Vec2(170, 190));
+        _infoSpriteRenderer = _infoSprite.AddComponent<RenderComponent>();
+        _infoSpriteRenderer.Image = Image.FromFile("start.png");
         #endregion
 
         Locator.EventManager.DeliverEvents();
@@ -123,7 +130,6 @@ public class Game {
 
     public void Run() {
 		Time.Timeout( "Reset", 1.0f, _ball.GetComponent<BallScript>().Restart );	
-		
 		bool running = true;
 
         while (running) { // gameloop
@@ -144,7 +150,6 @@ public class Game {
         lag += currentUpdateTime - previousUpdateTime;
         previousUpdateTime = currentUpdateTime;
         int counter = 0;
-        //Console.WriteLine("Lag: " + lag);
         while (lag >= MS_PER_UPDATE) {
             Time.UpdateBasedOnUpdate(); //updates the timestep based on actual gamplay updates instead of on frame updates;
             switch (_gameState) {
@@ -166,13 +171,10 @@ public class Game {
                 default:
                     break;
             }
-            
             Locator.EventManager.DeliverEvents(); 
             lag -= MS_PER_UPDATE;
             counter++;
         }
-        //Console.WriteLine("Updates this frame: " + counter);
-        
         drawGameObjects(graphics, (float)(lag / MS_PER_UPDATE));
     }
 	
@@ -180,12 +182,6 @@ public class Game {
 		_window.Close();
 	}
 	
-	static public Random Random {
-		get {
-			return random;
-		}
-	}
-
     void PauseHandler(object sender, PauseEvent e) {
         _gameState = e.state == PauseState.Paused ? GameState.Paused : GameState.Running;
     }
@@ -210,15 +206,12 @@ public class Game {
     private void updateGameObjects() {
         for (int i = gameObjectList.Count - 1; i >= 0; i--) {
             gameObjectList[i].Update();
-            //Console.WriteLine("{0} \t\t Got Updated!", gameObjectList[i].Name);
         }
     }
 
     private void drawGameObjects(Graphics graphics, float timeIntoNextFrame) {
-        //Console.WriteLine("Drawables: " + drawableList.Count);
         if (_gameState != GameState.Running) timeIntoNextFrame = 0.0f;
         for (int i = drawableList.Count - 1; i >= 0; i--) {
-
             drawableList[i].Draw(graphics, timeIntoNextFrame);
         }
     }
@@ -227,26 +220,18 @@ public class Game {
         return gameObjectList.Find(go => go.Name == pName);
     }
 
-    public void AddComponentToStartQue(Component component) {
-        componentStartQue[_startQueTail] = component;
-        _startQueTail = (_startQueTail + 1) % MAX_STARTEVENTS;
-    }
-
-    private void doComponentEvents() {
-        while (_startQueTail != _startQueHead) {
-            componentStartQue[_startQueHead].Start();
-            _startQueHead = (_startQueHead + 1) % MAX_STARTEVENTS;
-        }
-    }
-
     public void SetGameState(GameState gameState) {
         if (gameState == GameState.GameStart) {
+            _infoSpriteRenderer.Image = Image.FromFile("start.png");
+            _infoSpriteRenderer.Enabled = true;
             Locator.EventManager.AddEvent(new RestartEvent());
+        } else if (gameState == GameState.GameOver) {
+            _infoSpriteRenderer.Image = Image.FromFile("gameover.png");
+            _infoSpriteRenderer.Enabled = true;
+        } else {
+            _infoSpriteRenderer.Enabled = false;
         }
-
         _gameState = gameState;
     }
-
-    
 }
 

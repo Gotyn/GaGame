@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Diagnostics;
-using System.Collections;
 
 public class RenderComponent : Component {
     private Image _image;
+    private bool _enabled = true;
 
     public Image Image { get => _image; set => _image = value; }
+    public Vec2 Center { get => Owner.Position + 0.5f * Size; }
+    public bool Enabled { get => _enabled; set => _enabled = value; }
 
     public override void Start() {
         Owner.Size = Size;
@@ -27,11 +24,12 @@ public class RenderComponent : Component {
         Debug.Assert(Image != null);
 
         RigidBody rigidBody = Owner.GetComponent<RigidBody>();
-        if (rigidBody != null) {
-            graphics.DrawImage(_image, Owner.Position.X + rigidBody.Velocity.X * timeIntoNextFrame, Owner.Position.Y + rigidBody.Velocity.Y * timeIntoNextFrame);
-        } 
-        else {
-            graphics.DrawImage(_image, Owner.Position.X, Owner.Position.Y);
+        if (_enabled) {
+            if (rigidBody != null) {
+                graphics.DrawImage(_image, Owner.Position.X + rigidBody.Velocity.X * timeIntoNextFrame, Owner.Position.Y + rigidBody.Velocity.Y * timeIntoNextFrame);
+            } else {
+                graphics.DrawImage(_image, Owner.Position.X, Owner.Position.Y);
+            }
         }
     }
 
@@ -41,11 +39,4 @@ public class RenderComponent : Component {
             return new Vec2(_image.Width, _image.Height);
         }
     }
-
-    public Vec2 Center {
-        get {
-            return Owner.Position + 0.5f * Size;
-        }
-    }
-
 }

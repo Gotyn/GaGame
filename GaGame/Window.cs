@@ -9,7 +9,6 @@ using System.Windows.Forms;
 
 public class Window : Form
 {
-
 	private Game game;
 	
 	public Window( Game aGame )
@@ -25,8 +24,7 @@ public class Window : Form
 		Input.Key.Init( this );
 	}
 	
-	override
-	protected void OnPaint( PaintEventArgs e )  // adapter for caching repaints for updates
+	override protected void OnPaint( PaintEventArgs e )  // adapter for caching repaints for updates
 	{
         game.Update(e.Graphics);
 	}

@@ -57,17 +57,15 @@
     <Compile Include="Events\StartEvent.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
-    <Compile Include="Command.cs" />
     <Compile Include="Components\BaseComponents\Component.cs" />
     <Compile Include="Components\BaseComponents\PaddleInput.cs" />
     <Compile Include="Components\BaseComponents\RenderComponent.cs" />
     <Compile Include="Components\BaseComponents\RigidBody.cs" />
-    <Compile Include="Components\ScriptComponents\Temp\tempAutoPaddleComp.cs" />
     <Compile Include="Components\ScriptComponents\BallScript.cs" />
     <Compile Include="Components\ScriptComponents\BoosterScript.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Components\ScriptComponents\PaddleScript.cs" />
     <Compile Include="Components\ScriptComponents\TextComponent.cs" />
@@ -79,8 +77,6 @@
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GaEngine\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
