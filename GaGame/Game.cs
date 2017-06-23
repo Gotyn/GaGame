@@ -192,17 +192,14 @@ public class Game {
 
     //Gets called at GameObject's construction time.
     public void AddToGameObjects(GameObject gameObject) {
-        Debug.Assert(gameObject != null);
         gameObjectList.Add(gameObject);
     }
 
     public void AddToDrawables(RenderComponent drawable) {
-        Debug.Assert(drawable != null);
         drawableList.Add(drawable);
     }
 
     public void RemoveFromDrawables(RenderComponent drawable) {
-        Debug.Assert(drawable != null);
         drawableList.Remove(drawable);
     }
 

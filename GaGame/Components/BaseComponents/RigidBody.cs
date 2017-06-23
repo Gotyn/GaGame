@@ -10,7 +10,8 @@ public class RigidBody : Component {
     }
 
     public override void Update() {
-        Debug.Assert(Owner.Position != null);
+        Debug.Assert(Owner != null, "rigidbody appears to have no Owner set");
+        Debug.Assert(Owner.Position != null, Owner.Name + " doesn't have a valid position");
         if (_paused) return;
         _previousPosition = new Vec2(Owner.Position.X, Owner.Position.Y);
         Owner.Position.Add(Velocity);

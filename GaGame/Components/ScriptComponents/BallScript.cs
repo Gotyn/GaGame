@@ -9,7 +9,7 @@ public class BallScript : Component {
         Owner.Position = new Vec2(312, 232); // center of form
         RestartEvent.Handlers += this.RestartHandler;
         _rigidBody = Owner.GetComponent<RigidBody>();
-        Debug.Assert(_rigidBody != null);
+        Debug.Assert(_rigidBody != null, "_rigidBody in ballScript is NULL");
         Reset(); // sets pos and vel
     }
 

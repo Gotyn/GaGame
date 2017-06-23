@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using System.Diagnostics;
 
 public class PaddleScript : Component
 {
@@ -24,6 +25,7 @@ public class PaddleScript : Component
 
     public override void Start() {
         _score = 0;
+        Debug.Assert(Owner.GetComponent<RigidBody>() != null, Owner.Name + " couldn't find rigidbody");
         rigidBody_ = Owner.GetComponent<RigidBody>();
         ball_ = Locator.Game.FindGameObject("Ball");
         _ballRender = ball_.GetComponent<RenderComponent>();

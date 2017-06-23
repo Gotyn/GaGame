@@ -37,6 +37,7 @@ static public class Time
     static public void UpdateBasedOnUpdate() {
         float lastTime = updateNow;
         updateNow = (float)stopwatch.ElapsedTicks / Stopwatch.Frequency;
+        Debug.Assert(updateNow != lastTime, "Whoops. Updated twice in the same frame");
         updateStep = updateNow - lastTime;
     }
 	

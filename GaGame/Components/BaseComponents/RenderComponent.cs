@@ -10,6 +10,7 @@ public class RenderComponent : Component {
     public bool Enabled { get => _enabled; set => _enabled = value; }
 
     public override void Start() {
+        Debug.Assert(Owner != null, "Owner not set on a RenderComponent");
         Owner.Size = Size;
         Locator.Game.AddToDrawables(this);
     }
@@ -20,8 +21,8 @@ public class RenderComponent : Component {
     }
 
     virtual public void Draw(Graphics graphics, float timeIntoNextFrame) {
-        Debug.Assert(graphics != null);
-        Debug.Assert(Image != null);
+        Debug.Assert(graphics != null, "graphics is NULL (" + Owner.Name + ")");
+        Debug.Assert(Image != null, "image is NULL (" + Owner.Name + ")");
 
         RigidBody rigidBody = Owner.GetComponent<RigidBody>();
         if (_enabled) {

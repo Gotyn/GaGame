@@ -47,8 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Extended Class Diagram.cd" />
-    <None Include="Overview UML.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\ScriptComponents\AutoPaddleScript.cs" />
