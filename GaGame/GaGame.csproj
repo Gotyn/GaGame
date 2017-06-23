@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Extended Class Diagram.cd" />
     <None Include="Overview UML.cd" />
   </ItemGroup>
   <ItemGroup>

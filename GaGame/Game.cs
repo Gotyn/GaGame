@@ -206,12 +206,6 @@ public class Game {
         drawableList.Remove(drawable);
     }
 
-    private void printGameObjectList() {
-        foreach (GameObject go in gameObjectList) {
-            Console.WriteLine(go.Name);
-        }
-    }
-
     private void updateGameObjects() {
         for (int i = gameObjectList.Count - 1; i >= 0; i--) {
             gameObjectList[i].Update();
